@@ -1,0 +1,235 @@
+<template>
+  <basic-container>
+    <div class="page_form">
+      <el-form :model="searchForm" ref="searchForm" label-width="100px" class="xt_search_form">
+        <el-row :gutter="10">
+          <el-col :span="6">
+            <el-form-item label="所属终端IP" prop="ip">
+              <el-input v-model="searchForm.ip"  placeholder="请输入终端IP" clearable style="width:100%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="用户名" prop="name">
+              <el-input v-model="searchForm.name"  placeholder="请输入用户名" clearable style="width:100%"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="终端状态" prop="status">
+              <el-select v-model="searchForm.status"  placeholder="请选择终端状态" clearable>
+                <el-option  v-for="dict in deviceStatusList" :key="dict.value"  :label="dict.label" :value="dict.value"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
+    <div class="page_body">
+      <el-row>
+        <formTitle :titleText="'查询用户列表'" :titleType="'page_title'">
+          <div slot="rightBtnBox">
+            <el-button type="primary" size="small" icon="el-icon-search" @click="handleQuery">查询</el-button>
+            <el-button class="border-btn" size="small" icon="el-icon-refresh" @click="searchReset">重置</el-button>
+            <el-button size="small" type="primary"  @click="handleAdd">新增</el-button>
+          </div>
+        </formTitle>
+      </el-row>
+      <el-table
+        ref="dataTable"
+        stripe
+        size="small"
+        :data="dataList"
+        :height="tableHeight"
+      >
+        <el-table-column type="selection" width="30" fixed="left"></el-table-column>
+        <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
+        <el-table-column prop="ip" label="所属终端IP" width="150" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="name" label="用户名" width="150" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="type" label="用户类型" width="90" align="center" show-overflow-tooltip>
+          <template  slot-scope="scope">
+            <span>{{scope.row.type == 0 ? '管理员' : '普通用户'}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="可登录时间段" width="90" align="center" show-overflow-tooltip>
+          <template  slot-scope="scope">
+            <span>{{scope.row.start + '~' + scope.row.end}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="facePic" label="人脸照片" width="150" align="center" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="status" label="用户状态" width="90" align="center" show-overflow-tooltip>
+          <template  slot-scope="scope">
+            <span>{{filterStatus(scope.row.status,deviceStatusList)}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="200" align="center" fixed="right">
+          <template  slot-scope="scope">
+            <el-button type="text"
+                       class="list_btn"
+                      size="small"
+                      icon="el-icon-edit"
+                      @click="handleEdit(scope.row,scope.index)">编辑
+            </el-button>
+            <el-button type="text"
+                       class="list_btn btn_red"
+                      size="small"
+                      icon="el-icon-delete"
+                      @click="handleDeleteOne(scope.row.id)">删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <pagination
+        :total="total"
+        :page.sync="searchForm.current"
+        :limit.sync="searchForm.size"
+        @pagination="onLoad"
+      />
+    </div>
+
+  </basic-container>
+</template>
+
+<script>
+  import {getList, remove} from "@/api/device/devicerecord";
+  import {mapGetters,mapState} from "vuex";
+
+  export default {
+    data() {
+      return {
+        // 搜索相关
+        searchForm: {
+          ip: undefined,
+          name: undefined,
+          status: undefined,
+          current: 1,
+          size: 20,
+        },
+        // 表格相关
+        dataList: [],
+        loading: false,
+        tableHeight: undefined,
+        total: 0,
+        deviceStatusList:[{
+          label: '0',
+          value: '在线'
+        },{
+          label: '1',
+          value: '离线'
+        }],
+      };
+    },
+    computed: {
+      ...mapGetters(["permission"]),
+      permissionList() {
+        return {
+          addBtn: this.vaildData(this.permission.deviceRecord_add, false),
+          viewBtn: this.vaildData(this.permission.deviceRecord_view, false),
+          delBtn: this.vaildData(this.permission.deviceRecord_delete, false),
+          editBtn: this.vaildData(this.permission.deviceRecord_edit, false),
+          exportBtn: this.vaildData(this.permission.deviceRecord_export, false)
+        };
+      },
+    },
+    mounted(){
+      // 设置页面元素高度
+      this.setPageContentHeight()
+      // 设置表格高度
+      this.setTableHeight()
+      //加载数据
+      this.onLoad();
+    },
+    methods: {
+      // 设置表格高度
+      setTableHeight() {
+        let pageBody = document.getElementsByClassName('page_body')
+        this.tableHeight = pageBody[0].offsetHeight - 61 - 47 + 'px'
+      },
+      handleQuery() {
+        this.searchForm.current = 1
+        this.onLoad();
+      },
+      handleDeleteOne(id) {
+        //删除按钮
+        let ids = id;
+        this.handleDeleteConfirm(ids);
+      },
+      handleDeleteConfirm(ids) {
+        this.$confirm("点击确认将永久删除数据且无法恢复，请谨慎选择。", "确定将选择数据删除?", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            return remove(ids);
+          })
+          .then(() => {
+            this.onLoad();
+            this.$message({
+              type: "success",
+              message: "操作成功!"
+            });
+            //重新重新加载已经选择的数据。。。待实现
+          });
+      },
+      searchReset() {
+        //重置按钮
+        this.searchForm = {
+          ip: undefined,
+          status: undefined,
+          current: 1,
+          size: 20,
+        }
+        this.onLoad();
+      },
+      onLoad() {
+        //加载数据
+        this.loading = true;
+        getList(this.searchForm).then(res => {
+          const data = res.data;
+          this.total = data.total;
+          this.dataList = data.records;
+          this.loading = false;
+        });
+      },
+      // handleView(row) {
+      //   //详情 页面
+      //   this.$router.push({
+      //     path: '/detailRoute',
+      //     query: {
+      //       id: row.id,
+      //       componentName: 'devRecordDetail',
+      //       routerTitle: '设备建档详情'
+      //     }
+      //   });
+      // },
+      handleEdit(row) {
+        //编辑 页面
+        this.$router.push({
+          path: '/detailRoute',
+          query: {
+            id: row.id,
+            componentName: 'devRecordAdd',
+            routerTitle: '终端编辑'
+          }
+        });
+      },
+      handleAdd() {
+        //新增 页面
+        this.$router.push({
+          path: '/detailRoute',
+          query: {
+            componentName: 'devRecordAdd',
+            routerTitle: '终端新增'
+          }
+        });
+      },
+    }
+  };
+</script>
+<style lang="scss" scoped>
+.list_btn{
+  padding: 9px 5px !important;
+}
+.btn_red{
+  color: red;
+}
+</style>

@@ -1,0 +1,276 @@
+/**
+ * Created by Ln on 2020/7/1.
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#closeFlow {
+    position: absolute;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+
+}
+
+#closeFlow:hover {
+    opacity: 0.5;
+}
+
+.flowfile {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.flowContainer {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    padding: 0;
+    /*box-shadow: 0 2px 6px 0 rgba(207, 214, 230, 0.71);*/
+    border-radius: 5px;
+    position: relative;
+    overflow: auto;
+}
+
+.svgDiv {
+    position: absolute;
+}
+
+.svgText {
+    margin: 0;
+    padding: 0;
+    color: #46474c;
+    word-break: keep-all;
+}
+
+.svgImg1 {
+    position: absolute;
+    top: calc(50% - 14px);
+    left: calc(50% - 12px);
+}
+
+.svgImg2 {
+    position: absolute;
+    top: calc(50% - 12px);
+    left: calc(50% - 14px);
+}
+
+.ul-icon {
+    width: 2px;
+    height: 12px;
+    display: inline-block;
+    background: #2794f8;
+    margin-left: 11px;
+    margin-right: 8px;
+}
+
+.ul-arrow {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+
+    position: absolute;
+    right: 14px;
+    top: 9px;
+}
+
+.flow-text {
+    font-size: 14px;
+    font-family: MicrosoftYaHei;
+    color: rgba(70, 71, 76, 1);
+    line-height: 16px;
+    text-align: center;
+    width: 84px;
+    word-wrap: break-word;
+    transform: translateX(-50%);
+    left: 50%;
+    position: relative;
+}
+
+.list-name {
+    width: 60px;
+    display: inline-block;
+    text-align-last: justify;
+    color: #999999;
+    vertical-align: top;
+}
+
+.list-name + span {
+    display: inline-block;
+    width: calc(100% - 60px);
+    color: #46474C;
+}
+
+.ul-title {
+    height: 36px;
+    line-height: 36px;
+    color: #46474c;
+    position: relative;
+    background: #f6f7f9;
+    border-top: 1px solid #e1e1e1;
+}
+
+.ul-title:first-child {
+    border-top: none;
+    /*border-bottom: 1px solid #E1E1E1;*/
+}
+
+.pop-win {
+    display: none;
+    width: 236px;
+    background: #fff;
+    border: 1px solid rgba(232, 232, 232, 1);
+    border-radius: 4px;
+    position: absolute;
+    z-index: 9999;
+    text-align: left;
+    max-height: 230px;
+    overflow-y: auto;
+}
+
+.pop-win .ul-info {
+    position: relative;
+    max-height: 225px;
+    overflow-y: auto;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.pop-win .ul-info:last-child {
+    border-bottom: none;
+}
+
+.triangle-up {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 10px solid rgba(232, 232, 232, 1);
+    z-index: 10000;
+}
+
+.triangelup-inside {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 11px solid #fff;
+    z-index: 10000;
+}
+
+.triangle-down {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 10px solid rgba(232, 232, 232, 1);
+    z-index: 10000;
+}
+
+.triangeldown-inside {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 11px solid #fff;
+    z-index: 10000;
+}
+
+.pop-win ul {
+    list-style: none;
+    font-size: 12px;
+    padding: 10px;
+    margin: 0;
+}
+
+.pop-win ul li {
+    padding: 4px 0;
+    line-height: 20px;
+}
+
+.pop-win ul li:last-child,
+.pop-win ul:last-child {
+    border: 0;
+}
+
+#fullScreen {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 43px;
+}
+
+#fullScreen:hover {
+    opacity: 0.5;
+}
+
+.fullScreen1 {
+
+}
+
+.fullScreen2 {
+
+}
+
+.fullScreen3 {
+
+}
+
+.ul-icon {
+    width: 2px;
+    height: 12px;
+    display: inline-block;
+    background: #2794f8;
+    margin-left: 11px;
+    margin-right: 8px;
+}
+
+.ul-arrow {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url("../../../assets/workflow/arrow.png") no-repeat;
+    position: absolute;
+    right: 14px;
+    top: 9px;
+}
+
+.ul-title {
+    height: 36px;
+    line-height: 36px;
+    color: #46474c;
+    position: relative;
+    background: #f6f7f9;
+    border-top: 1px solid #e1e1e1;
+}
+
+.ul-title:first-child {
+    border-top: none;
+    /*border-bottom: 1px solid #E1E1E1;*/
+}
+
+.empty-render {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-content {
+    width: 200px;
+    height: 200px;
+    background: url("../../../assets/workflow/noFlowChart.svg") no-repeat;
+}
+
+.text-content {
+    color: rgb(183, 183, 183);
+}
