@@ -41,7 +41,7 @@ module.exports = {
     // 反向代理配置
     proxy: {
       '/api': {
-        target: 'http://192.168.0.101:18084', //徐玉铮
+        target: 'http://172.20.10.8:18084', //徐玉铮
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -49,7 +49,7 @@ module.exports = {
         }
       },
       '/idevelop-auth': {
-        target: 'http://192.168.0.103:18084', //徐玉铮
+        target: 'http://172.20.10.8:18084', //徐玉铮
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -57,7 +57,7 @@ module.exports = {
         }
       },
       '/idevelop-system': {
-        target: 'http://192.168.0.103:18084', //徐玉铮
+        target: 'http://172.20.10.8:18084', //徐玉铮
         ws: true,
         changeOrigin: true,
         pathRewrite: {

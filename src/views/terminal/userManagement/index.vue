@@ -47,7 +47,9 @@
           <el-table-column prop="userType" label="用户类型" min-width="90" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="可登录时间段" min-width="300" align="center" show-overflow-tooltip>
             <template  slot-scope="scope">
-              <span v-if="scope.row.userType == '临时用户'">{{scope.row.timeList[0].loginBeginTime + '~' + scope.row.timeList[0].loginEndTime}}</span>
+              <span v-if="scope.row.userType == '临时用户' && scope.row.timeList && scope.row.timeList.length > 0">
+                {{scope.row.timeList[0].loginBeginTime + '~' + scope.row.timeList[0].loginEndTime}}
+              </span>
               <span v-else>——</span>
             </template>
           </el-table-column>
@@ -94,6 +96,7 @@
         // 搜索相关
         searchForm: {
           ip: undefined,
+          name: undefined,
           status: undefined,
           current: 1,
           size: 20,
@@ -112,7 +115,6 @@
         }],
       };
     },
-    components: {moment},
     mounted(){
       // 设置页面元素高度
       this.setPageContentHeight()
@@ -166,19 +168,31 @@
       onLoad() {
         //加载数据
         this.loading = true;
-        console.log('this.searchForm',this.searchForm);
+        console.log('this.searchForm', this.searchForm);
         getUserList(this.searchForm).then(res => {
           const data = res.data;
           this.total = data.total;
-          this.dataList = data.records.map(item=> {
+          this.dataList = data.records.map(item => {
+            // 格式化timeList中的时间
+            if (item.timeList && item.timeList.length > 0) {
+              item.timeList = item.timeList.map(timeItem => {
+                return {
+                  ...timeItem,
+                  loginBeginTime: timeItem.loginBeginTime ? moment(timeItem.loginBeginTime).format("YYYY-MM-DD HH:mm:ss") : '',
+                  loginEndTime: timeItem.loginEndTime ? moment(timeItem.loginEndTime).format("YYYY-MM-DD HH:mm:ss") : ''
+                };
+              });
+            }
             return {
               ...item,
-              loginBeginTime: moment(item.loginBeginTime).format("YYYY-MM-DD HH:mm:ss"),
-              loginEndTime: moment(item.loginEndTime).format("YYYY-MM-DD HH:mm:ss"),
-            }
-  
+              loginBeginTime: item.loginBeginTime ? moment(item.loginBeginTime).format("YYYY-MM-DD HH:mm:ss") : '',
+              loginEndTime: item.loginEndTime ? moment(item.loginEndTime).format("YYYY-MM-DD HH:mm:ss") : '',
+            };
           });
           this.loading = false;
+        }).catch(error => {
+          this.loading = false;
+          console.error('加载数据失败:', error);
         });
       },
       handleEdit(row) {

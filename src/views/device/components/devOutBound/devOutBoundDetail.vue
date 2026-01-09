@@ -401,7 +401,7 @@ import step from "@/components/step/index.vue";
 import {getGroupDictList} from "@/api/system/usergroup";
 import {getWareDictList} from "@/api/device/warehouse";
 import operateForm from "@/views/personalDesk/components/operateForm.vue"
-import uploadImg from "@/views/operation/components/devReturned/uploadImg.vue";;
+import uploadImg from "@/views/operation/components/devReturned/uploadImg.vue";
 
 export default {
   components: {operateForm, step, uploadImg},

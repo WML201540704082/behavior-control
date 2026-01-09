@@ -386,7 +386,7 @@ export default {
           id: this.selectionList[0].id
       }
       getRadiusState(params).then(resp => {
-        if(Boolean(resp.data)){
+        if(resp.data){
           this.$message({
             message:"Radius同步成功",
             type:"success"
