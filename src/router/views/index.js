@@ -69,7 +69,7 @@ export default [
         import( /* webpackChunkName: "views" */ '@/views/user/info')
     }]
   },
-  {
+  { 
     path: '/xcnanr',
     component: Layout,
     children: [
@@ -388,6 +388,22 @@ export default [
         },
         component: () =>
           import('@/views/xcnanr/operationOrder/maintanceorders/detailMaintenance.vue')
+      }
+    ]
+  },
+  {
+    path: '/detailRoute',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: '详情路由',
+        meta: {
+          i18n: 'dashboard',
+          menu: false
+        },
+        component: () =>
+          import('@/views/detailRoute/index')
       }
     ]
   }
