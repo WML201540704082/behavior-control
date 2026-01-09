@@ -38,9 +38,13 @@
           :height="tableHeight"
         >
           <el-table-column type="index" label="序号" min-width="50" align="center"></el-table-column>
-          <el-table-column prop="ip" label="终端IP" min-width="150" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
-          <!-- <el-table-column prop="department" label="用户部门" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
+          <el-table-column prop="ip" label="终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip>
+            <template  slot-scope="scope">
+              <span>{{scope.row.dept + '-' + scope.row.userName}}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column prop="dept" label="用户部门" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
           <el-table-column prop="openTime" label="开机时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="showdownTime" label="关机时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="onlineLength" label="在线时长" min-width="90" align="center" show-overflow-tooltip>
