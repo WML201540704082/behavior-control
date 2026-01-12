@@ -150,8 +150,8 @@ export default {
       }).then(res => {
         // const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : ['10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193']
         // const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength) : [42,38,30,22,18,12,10]
-        const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : []
-        const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength/60) : []
+        const ipList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.ip) : []
+        const timeLength = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.timeLength/60) : []
         this.terminalChartInit(ipList,timeLength)
       });
     },
@@ -214,8 +214,8 @@ export default {
         startTime: aaa1,
         endTime: aaa2
       }).then(res => {
-        const nameList = res.data.length > 0 ? res.data.map(item => item.name) : []
-        const totalUseMinutesList = res.data.length > 0 ? res.data.map(item => item.totalUseMinutes/60) : []
+        const nameList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.name) : []
+        const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.totalUseMinutes/60) : []
         this.userChartInit(nameList,totalUseMinutesList)
       });
     },
@@ -278,8 +278,8 @@ export default {
         startTime: aaa1,
         endTime: aaa2
       }).then(res => {
-        const deptList = res.data.length > 0 ? res.data.map(item => item.dept) : []
-        const lenList = res.data.length > 0 ? res.data.map(item => item.len/60) : []
+        const deptList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.dept) : []
+        const lenList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.len/60) : []
         this.deptChartInit(deptList,lenList)
       });
     },
@@ -344,8 +344,8 @@ export default {
     //     start: aaa1,
     //     end: aaa2
     //   }).then(res => {
-    //     const businessNameList = res.data.length > 0 ? res.data.map(item => item.businessName || item.url) : []
-    //     const countList = res.data.length > 0 ? res.data.map(item => item.count) : []
+    //     const businessNameList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.businessName || item.url) : []
+    //     const countList = res.data.length > 0 ? res.data.slice(0, 8).map(item => item.count) : []
     //     this.urlCountChartInit(businessNameList,countList)
     //   });
     // },
