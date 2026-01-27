@@ -19,7 +19,7 @@ export default {
   isFirstPage: false,
   fistPage: {
     label: "首页",
-    value: "/wel/index",
+    value: "/wel/index/index",
     params: {},
     query: {},
     meta: {

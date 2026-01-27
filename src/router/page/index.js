@@ -91,7 +91,7 @@ export default [{
 {
     path: '/',
     name: '主页',
-    redirect: '/wel'
+    redirect: '/wel/index/index'
 },
 {
     path: '/myiframe',

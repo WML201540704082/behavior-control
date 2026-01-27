@@ -4,26 +4,33 @@ export default [
   {
     path: '/wel',
     component: Layout,
-    redirect: '/wel/index',
+    redirect: '/wel/index/index',
     children: [{
       path: 'index',
       name: '首页',
       meta: {
         i18n: 'dashboard'
       },
-      component: () =>
-        import( /* webpackChunkName: "views" */ '@/views/wel/index')
+      component: () => import( /* webpackChunkName: "views" */ '@/views/wel/index')
     }, {
-      path: 'dashboard',
-      name: '控制台',
+      path: 'index/index',
+      name: '首页',
       meta: {
-        i18n: 'dashboard',
-        menu: false,
+        i18n: 'dashboard'
       },
       component: () =>
-        import( /* webpackChunkName: "views" */ '@/views/wel/dashboard')
-    }]
-  },
+        import( /* webpackChunkName: "views" */ '@/views/wel/index/index')
+      }, {
+        path: 'dashboard',
+        name: '控制台',
+        meta: {
+          i18n: 'dashboard',
+          menu: false,
+        },
+        component: () =>
+          import( /* webpackChunkName: "views" */ '@/views/wel/dashboard')
+      }]
+    },
 
   {
     path: '/personalDesk/desk',

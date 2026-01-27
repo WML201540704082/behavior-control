@@ -69,12 +69,8 @@ router.beforeEach(async (to, from, next) => {
             store.dispatch("GetUserUnit", store.state.user.userDetail.ownerUnit);
             store.dispatch("GetCustomId").then(() => {
             }).finally(() => {
-              if (to.path == "/wel/index") { // 跳到首页
-                if (store.state.user.userDetail.regionCode == '37') { // 登录账号为省级
-                  next()
-                } else {
-                  next('/personalDesk/desk')
-                }
+              if (to.path == "/wel/index" || to.path == "/personalDesk/desk") { // 跳转到首页详情
+                next('/wel/index/index')
               } else {
                 next()
               }
@@ -86,26 +82,16 @@ router.beforeEach(async (to, from, next) => {
           // next();
           let userDetial = store.state.user.userDetail;
           if (userDetial && Object.keys(userDetial).length > 0) {
-            if (to.path == "/wel/index") { // 跳到首页
-              if (store.state.user.userDetail.regionCode == '37') { // 登录账号为省级
-                next()
-              } else {
-                next('/personalDesk/desk')
-                // next()
-              }
+            if (to.path == "/wel/index" || to.path == "/personalDesk/desk") { // 跳转到首页详情
+              next('/wel/index/index')
             } else {
               next()
             }
           } else {
             store.dispatch("GetUserDetail").then(() => {
               store.dispatch("GetUserUnit", store.state.user.userDetail.ownerUnit)
-              if (to.path == "/wel/index") { // 跳到首页
-                if (store.state.user.userDetail.regionCode == '37') { // 登录账号为省级
-                  next()
-                } else {
-                  next('/personalDesk/desk')
-                  // next()
-                }
+              if (to.path == "/wel/index" || to.path == "/personalDesk/desk") { // 跳转到首页详情
+                next('/wel/index/index')
               } else {
                 next()
               }
