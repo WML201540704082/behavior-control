@@ -40,30 +40,33 @@ module.exports = {
     // port: 80,
     // 反向代理配置
     proxy: {
-      '/api': {
+      // 处理所有API请求，包括带双斜杠的路径
+      '^/(api|idevelop-auth|idevelop-system|//idevelop-auth|//idevelop-system)': {
         target: 'http://172.20.10.8:18084', //徐玉铮
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/'
-        }
-      },
-      '/idevelop-auth': {
-        target: 'http://172.20.10.8:18084', //徐玉铮
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/idevelop-auth': '/idevelop-auth'
-        }
-      },
-      '/idevelop-system': {
-        target: 'http://172.20.10.8:18084', //徐玉铮
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/idevelop-system': '/idevelop-system'
+          '^/api': '/',
+          '^/idevelop-auth': '/idevelop-auth',
+          '^/idevelop-system': '/idevelop-system',
+          '^//idevelop-auth': '/idevelop-auth',
+          '^//idevelop-system': '/idevelop-system'
         }
       }
+    },
+    // 防止文件监听导致的无限重新编译
+    watchOptions: {
+      poll: false,
+      ignored: [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/.git/**',
+        '**/*.log',
+        '**/*.tmp',
+        '**/*.swp',
+        '**/* - 副本.vue'
+      ],
+      aggregateTimeout: 500
     }
   },
   css: {

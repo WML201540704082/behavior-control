@@ -10,7 +10,7 @@ import request from '@/router/axios';
 
 // 查询分页列表
 export const getListByPage = (query) => request({
-  url: '/api/idevelop-xcnanr//xcnanr/infoInspectionConfig/getByPage',
+  url: '/api/idevelop-xcnanr/xcnanr/infoInspectionConfig/getByPage',
   method: 'get',
   params: query
 })

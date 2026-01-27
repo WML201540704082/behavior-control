@@ -12,7 +12,7 @@ export const uploadFile1 = (params) => {
 // 导入问题
 export const exportUploadFile = (params) => {
   return request({
-    url: '/api//idevelop-control/question/import',
+    url: '/api/idevelop-control/question/import',
     method: 'post',
     data: params
   })
