@@ -122,7 +122,7 @@
               ...item,
               startTime: moment(item.startTime).format("YYYY-MM-DD HH:mm:ss"),
               endTime: item.endTime ? moment(item.endTime).format("YYYY-MM-DD HH:mm:ss") : moment(item.startTime).add(28,'seconds').format("YYYY-MM-DD HH:mm:ss"),
-              accessLength: item.accessLength == -1 ? 28 : item.accessLength
+              accessLength: item.accessLength == -1 ? 30 : item.accessLength
             }
           });
           this.loading = false;
