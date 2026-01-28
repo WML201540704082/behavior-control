@@ -34,6 +34,8 @@ module.exports = {
     entry
       .add('@/mock')
       .end()
+    // 禁用CSS压缩
+    config.plugins.delete('optimize-css')
   },
   devServer: {
     // 端口配置
@@ -87,11 +89,11 @@ module.exports = {
     plugins: [
       // 使用gzip解压缩静态文件
       new CompressionPlugin({
-        test: /\.(js|css|html)?$/i, // 压缩文件格式
+        test: /\.(js|html)?$/i, // 压缩文件格式，移除css
         filename: "[path].gz[query]", // 压缩后的文件名
         algorithm: "gzip", // 使用gzip压缩
         minRatio: 0.8, // 压缩率小于1才会压缩
       }),
     ],
-  },
+  }
 }

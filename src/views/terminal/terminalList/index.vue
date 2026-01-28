@@ -22,7 +22,6 @@
         <el-row>
           <formTitle :titleText="'查询终端列表'" :titleType="'page_title'">
             <div slot="rightBtnBox">
-              <el-switch v-model="isSlaveMode" active-text="从机模式" inactive-text="主机模式" @change="handleModeChange" />
               <el-button type="primary" size="small" icon="el-icon-search" @click="handleQuery">查询</el-button>
               <el-button class="border-btn" size="small" icon="el-icon-refresh" @click="searchReset">重置</el-button>
               <el-button size="small" type="primary"  @click="handleAdd">新增</el-button>
@@ -104,8 +103,6 @@
           label: 0,
           value: '离线'
         }],
-        // 模式切换
-        isSlaveMode: true,
       };
     },
     mounted(){
@@ -158,16 +155,10 @@
         }
         this.onLoad();
       },
-      handleModeChange() {
-        // 模式切换时重新加载数据
-        this.searchForm.current = 1;
-        this.onLoad();
-      },
       onLoad() {
         //加载数据
         this.loading = true;
-        const apiMethod = this.isSlaveMode ? getTerminalSlaveList : getTerminalList;
-        apiMethod(this.searchForm).then(res => {
+        getTerminalList(this.searchForm).then(res => {
           const data = res.data;
           this.total = data.total;
           this.dataList = data.records;
