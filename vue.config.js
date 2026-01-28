@@ -42,7 +42,8 @@ module.exports = {
     proxy: {
       // 处理所有API请求，包括带双斜杠的路径
       '^/(api|idevelop-auth|idevelop-system|//idevelop-auth|//idevelop-system)': {
-        target: 'http://172.20.10.8:18084', //徐玉铮
+        target: 'http://172.20.10.8:18084',
+        // target: 'http://localhost:18084',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

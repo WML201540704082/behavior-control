@@ -18,9 +18,11 @@
                 <el-input v-model="searchForm.userName"  placeholder="请输入登录用户" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col>
+            <el-button style="border: 1px #ffffff solid;position: absolute;right: 10px;" v-model="isSlaveMode" @click="handleModeChange"></el-button>
           </el-row>
         </el-form>
       </div>
+      <!-- <el-switch v-model="isSlaveMode" active-text="从机模式" inactive-text="主机模式" @change="handleModeChange" /> -->
       <div class="page_body">
         <el-row>
           <formTitle :titleText="'查询网络访问记录列表'" :titleType="'page_title'">
@@ -37,7 +39,7 @@
           :data="dataList"
           :height="tableHeight"
         >
-          <el-table-column type="index" label="序号" min-width="50" align="center"></el-table-column>
+          <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
           <el-table-column prop="url" label="URL地址" min-width="150" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="businessName" label="业务系统名称" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
@@ -63,7 +65,7 @@
   </template>
   
   <script>
-  import {getNetworkLogList} from "@/api/terminal";
+  import {getNetworkLogList, getNetworkLogSlaveList} from "@/api/terminal";
   import moment from "moment";
   export default {
     data() {
@@ -80,6 +82,8 @@
         loading: false,
         tableHeight: undefined,
         total: 0,
+        // 模式切换
+        isSlaveMode: true,
       };
     },
     components: {moment},
@@ -111,10 +115,17 @@
         }
         this.onLoad();
       },
+      handleModeChange() {
+        this.isSlaveMode = !this.isSlaveMode
+        // 模式切换时重新加载数据
+        this.searchForm.current = 1;
+        this.onLoad();
+      },
       onLoad() {
         //加载数据
         this.loading = true;
-        getNetworkLogList(this.searchForm).then(res => {
+        const apiMethod = this.isSlaveMode ? getNetworkLogSlaveList : getNetworkLogList;
+        apiMethod(this.searchForm).then(res => {
           const data = res.data;
           this.total = data.total;
           this.dataList = data.records.map(item=> {

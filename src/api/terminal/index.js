@@ -156,7 +156,15 @@ export const maintenanceRemove = (id) => {
 export const getNetworkLogList = (params) => {
   return request({
     url: '/api/idevelop-ipc/ipcnetworklog/list',
-    // url: '/api/idevelop-ipc/ipcnetworklog/list/slave',
+    method: 'get',
+    params: params
+  })
+}
+
+// 网络访问记录（从机）
+export const getNetworkLogSlaveList = (params) => {
+  return request({
+    url: '/api/idevelop-ipc/ipcnetworklog/list/slave',
     method: 'get',
     params: params
   })
