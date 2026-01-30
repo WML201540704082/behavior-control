@@ -44,6 +44,7 @@
           <el-table-column type="index" label="序号" min-width="50" align="center"></el-table-column>
           <el-table-column prop="terminal" label="所属终端IP" min-width="150" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="name" label="用户名" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="department" label="部门" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="userType" label="用户类型" min-width="90" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column label="可登录时间段" min-width="300" align="center" show-overflow-tooltip>
             <template  slot-scope="scope">

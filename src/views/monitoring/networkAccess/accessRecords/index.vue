@@ -4,8 +4,8 @@
         <el-form :model="searchForm" ref="searchForm" label-width="100px" class="xt_search_form">
           <el-row :gutter="10">
             <el-col :span="6">
-              <el-form-item label="业务系统名称" prop="userName">
-                <el-input v-model="searchForm.userName"  placeholder="请输入业务系统名称" clearable style="width:100%"></el-input>
+              <el-form-item label="登录用户" prop="userName">
+                <el-input v-model="searchForm.userName"  placeholder="请输入登录用户" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -13,16 +13,15 @@
                 <el-input v-model="searchForm.ip"  placeholder="请输入终端IP" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
-              <el-form-item label="登录用户" prop="userName">
-                <el-input v-model="searchForm.userName"  placeholder="请输入登录用户" clearable style="width:100%"></el-input>
+            <!-- <el-col :span="6">
+              <el-form-item label="业务系统名称" prop="businessName">
+                <el-input v-model="searchForm.businessName"  placeholder="请输入业务系统名称" clearable style="width:100%"></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-button style="border: 1px #ffffff solid;position: absolute;right: 10px;" v-model="isSlaveMode" @click="handleModeChange"></el-button>
           </el-row>
         </el-form>
       </div>
-      <!-- <el-switch v-model="isSlaveMode" active-text="从机模式" inactive-text="主机模式" @change="handleModeChange" /> -->
       <div class="page_body">
         <el-row>
           <formTitle :titleText="'查询网络访问记录列表'" :titleType="'page_title'">
