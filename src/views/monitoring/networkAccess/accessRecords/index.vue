@@ -39,13 +39,14 @@
           size="small"
           :data="dataList"
           :height="tableHeight"
+          empty-text="请先选择登录用户或填写终端IP进行搜索"
         >
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-          <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <!-- <el-table-column prop="name" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
           <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="url" label="URL地址" min-width="150" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="businessName" label="业务系统名称" min-width="100" align="center" show-overflow-tooltip></el-table-column>
-          <!-- <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <!-- <el-table-column prop="name" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="userDept" label="用户部门" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
           <el-table-column prop="startTime" label="访问开始时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="endTime" label="访问结束时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
@@ -77,7 +78,7 @@
         searchForm: {
           ip: undefined,
           status: undefined,
-          userName: undefined,
+          name: undefined,
           current: 1,
           size: 20,
         },
@@ -115,7 +116,16 @@
           size: 200
         }).then(res => {
           if (res.data) {
-            this.userList = res.data.records;
+            // 根据 name 去重
+            const uniqueUsers = [];
+            const names = new Set();
+            res.data.records.forEach(user => {
+              if (!names.has(user.name)) {
+                names.add(user.name);
+                uniqueUsers.push(user);
+              }
+            });
+            this.userList = uniqueUsers;
           }
         });
       },
@@ -158,7 +168,7 @@
             return {
               ...item,
               startTime: moment(item.startTime).format("YYYY-MM-DD HH:mm:ss"),
-              endTime: item.endTime ? moment(item.endTime).format("YYYY-MM-DD HH:mm:ss") : moment(item.startTime).add(28,'seconds').format("YYYY-MM-DD HH:mm:ss"),
+              endTime: item.endTime ? moment(item.endTime).format("YYYY-MM-DD HH:mm:ss") : moment(item.startTime).add(30,'seconds').format("YYYY-MM-DD HH:mm:ss"),
               accessLength: item.accessLength == -1 ? 30 : item.accessLength
             }
           });
