@@ -5,7 +5,9 @@
           <el-row :gutter="10">
             <el-col :span="6">
               <el-form-item label="登录用户" prop="userName">
-                <el-input v-model="searchForm.userName"  placeholder="请输入登录用户" clearable style="width:100%"></el-input>
+                <el-select v-model="searchForm.userName" placeholder="请选择登录用户" clearable style="width:100%">
+                  <el-option v-for="user in userList" :key="user.id" :label="user.name" :value="user.name"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -39,9 +41,10 @@
           :height="tableHeight"
         >
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
+          <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="url" label="URL地址" min-width="150" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="businessName" label="业务系统名称" min-width="100" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <!-- <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="userDept" label="用户部门" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
           <el-table-column prop="startTime" label="访问开始时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
@@ -65,6 +68,7 @@
   
   <script>
   import {getNetworkLogList, getNetworkLogSlaveList} from "@/api/terminal";
+  import {getUserList} from "@/api/terminal";
   import moment from "moment";
   export default {
     data() {
@@ -73,6 +77,7 @@
         searchForm: {
           ip: undefined,
           status: undefined,
+          userName: undefined,
           current: 1,
           size: 20,
         },
@@ -83,6 +88,8 @@
         total: 0,
         // 模式切换
         isSlaveMode: true,
+        // 用户列表
+        userList: [],
       };
     },
     components: {moment},
@@ -91,6 +98,8 @@
       this.setPageContentHeight()
       // 设置表格高度
       this.setTableHeight()
+      // 加载用户列表
+      this.loadUserList();
       //加载数据
       this.onLoad();
     },
@@ -99,6 +108,17 @@
       setTableHeight() {
         let pageBody = document.getElementsByClassName('page_body')
         this.tableHeight = pageBody[0].offsetHeight - 61 - 47 + 'px'
+      },
+      // 加载用户列表
+      loadUserList() {
+        getUserList({
+          current: 1,
+          size:100
+        }).then(res => {
+          if (res.data) {
+            this.userList = res.data.records;
+          }
+        });
       },
       handleQuery() {
         this.searchForm.current = 1
@@ -109,6 +129,7 @@
         this.searchForm = {
           ip: undefined,
           status: undefined,
+          userName: undefined,
           current: 1,
           size: 20,
         }
