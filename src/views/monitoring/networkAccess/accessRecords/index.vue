@@ -100,8 +100,7 @@
       this.setTableHeight()
       // 加载用户列表
       this.loadUserList();
-      //加载数据
-      this.onLoad();
+      // 初始化时不加载数据，点击查询才加载
     },
     methods: {
       // 设置表格高度
@@ -113,7 +112,7 @@
       loadUserList() {
         getUserList({
           current: 1,
-          size:100
+          size: 200
         }).then(res => {
           if (res.data) {
             this.userList = res.data.records;
@@ -121,6 +120,11 @@
         });
       },
       handleQuery() {
+        // 校验登录用户或终端IP最少填写一个
+        if (!this.searchForm.userName && !this.searchForm.ip) {
+          this.$message.warning('请至少填写登录用户或终端IP中的一项');
+          return;
+        }
         this.searchForm.current = 1
         this.onLoad();
       },
@@ -133,13 +137,15 @@
           current: 1,
           size: 20,
         }
-        this.onLoad();
+        // 重置后不自动加载数据，清空表格
+        this.dataList = [];
+        this.total = 0;
       },
       handleModeChange() {
         this.isSlaveMode = !this.isSlaveMode
-        // 模式切换时重新加载数据
+        // 模式切换时不自动加载数据
         this.searchForm.current = 1;
-        this.onLoad();
+        this.onLoad()
       },
       onLoad() {
         //加载数据
