@@ -49,9 +49,9 @@ axios.interceptors.request.use(config => {
     config.data = serialize(config.data);
   }
   // // 完整性处理
-  secureUtil.toReqIntegrity(config)
+  // secureUtil.toReqIntegrity(config)
   // // 对请求参数加密处理
-  secureUtil.reqCrypto(config);
+  // secureUtil.reqCrypto(config);
   return config
 }, error => {
   return Promise.reject(error)

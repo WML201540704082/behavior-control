@@ -21,6 +21,13 @@
             </el-row>
             <el-row>
               <el-col :span="8">
+                <el-form-item label="所属部门" prop="department" :rules="[{ required: true, message: '所属部门不能为空'}]">
+                  <el-input v-model="form.department" placeholder="请输入所属部门"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8">
                 <el-form-item label="用户类型" prop="userType" :rules="[{ required: true, message: '用户类型不能为空'}]">
                   <el-select v-model="form.userType" placeholder="请选择用户类型" clearable>
                     <el-option v-for="dict in userTypeList" :key="dict.value" :label="dict.value" :value="dict.label"></el-option>
@@ -43,7 +50,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <!-- <el-row>
               <el-col :span="8">
                 <el-form-item label="终端状态" prop="status" :rules="[{ required: true, message: '终端状态不能为空'}]">
                   <el-select v-model="form.status" placeholder="请选择终端状态" clearable>
@@ -51,7 +58,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-            </el-row>
+            </el-row> -->
             <!-- <el-row>
               <el-col :span="8">
                 <el-form-item label="人脸照片" prop="face" :rules="[{ required: true, message: '人脸照片不能为空'}]">

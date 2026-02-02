@@ -4,8 +4,8 @@
         <el-form :model="searchForm" ref="searchForm" label-width="100px" class="xt_search_form">
           <el-row :gutter="10">
             <el-col :span="6">
-              <el-form-item label="所属终端IP" prop="ip">
-                <el-input v-model="searchForm.ip"  placeholder="请输入终端IP" clearable style="width:100%"></el-input>
+              <el-form-item label="所属终端IP" prop="terminal">
+                <el-input v-model="searchForm.terminal"  placeholder="请输入终端IP" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -13,13 +13,13 @@
                 <el-input v-model="searchForm.name"  placeholder="请输入用户名" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <!-- <el-col :span="6">
               <el-form-item label="终端状态" prop="status">
                 <el-select v-model="searchForm.status"  placeholder="请选择终端状态" clearable>
                   <el-option  v-for="dict in deviceStatusList" :key="dict.value"  :label="dict.label" :value="dict.value"></el-option>
                 </el-select>
               </el-form-item>
-            </el-col>
+            </el-col> -->
           </el-row>
         </el-form>
       </div>

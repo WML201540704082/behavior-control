@@ -5,7 +5,7 @@
           <el-row :gutter="10">
             <el-col :span="6">
               <el-form-item label="登录用户" prop="userName">
-                <el-select v-model="searchForm.userName" placeholder="请选择登录用户" clearable style="width:100%">
+                <el-select v-model="searchForm.userName" filterable placeholder="请选择登录用户" clearable style="width:100%">
                   <el-option v-for="user in userList" :key="user.id" :label="user.name" :value="user.name"></el-option>
                 </el-select>
               </el-form-item>
