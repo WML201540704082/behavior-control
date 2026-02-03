@@ -68,8 +68,7 @@
   </template>
   
   <script>
-  import {getNetworkLogList, getNetworkLogSlaveList} from "@/api/terminal";
-  import {getUserList} from "@/api/terminal";
+  import {getNetworkLogList, getNetworkLogSlaveList,getUserList} from "@/api/terminal";
   import moment from "moment";
   export default {
     data() {
@@ -135,8 +134,35 @@
           this.$message.warning('请至少填写登录用户或终端IP中的一项');
           return;
         }
-        this.searchForm.current = 1
-        this.onLoad();
+        this.searchForm.current = 1;
+        
+        // 如果userName有值，调用用户管理列表接口获取用户IP
+        if (this.searchForm.userName) {
+          this.loading = true;
+          getUserList({
+            current: 1,
+            size: 100,
+            name: this.searchForm.userName
+          }).then(res => {
+            if (res.data && res.data.records && res.data.records.length > 0) {
+              // 获取当前用户的全部IP
+              const userIps = [];
+              res.data.records.forEach(user => {
+                if (user.terminal) {
+                  userIps.push(user.terminal);
+                }
+              });
+              if (userIps.length > 0) {
+                this.searchForm.ips = userIps;
+              }
+            }
+            this.loading = false;
+            this.onLoad();
+          }).catch(() => {
+            this.loading = false;
+            this.onLoad();
+          });
+        }
       },
       searchReset() {
         //重置按钮

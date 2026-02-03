@@ -64,7 +64,7 @@ export default {
       departmentChart: null,
       urlChart: null,
       // 当前选中的日期类型
-      currentDate: 'month',
+      currentDate: 'today',
       // 日期选项配置
       dateOptions: [
         { label: '昨天', value: 'yesterday' },
