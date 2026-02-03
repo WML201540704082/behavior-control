@@ -57,7 +57,7 @@ export default {
     return {
       turnoverLoading: false,
       datePicker: false,
-      start: moment().startOf('month').format('YYYY-MM-DD'),
+      start: moment().format('YYYY-MM-DD'),
       end: moment().format('YYYY-MM-DD'),
       terminalChart: null,
       userChart: null,
@@ -67,9 +67,9 @@ export default {
       currentDate: 'today',
       // 日期选项配置
       dateOptions: [
+        // { label: '上月', value: 'lastMonth' },
         { label: '昨天', value: 'yesterday' },
         { label: '今天', value: 'today' },
-        // { label: '上月', value: 'lastMonth' },
         { label: '本月', value: 'month' }
       ],
       value1: '',
@@ -142,8 +142,8 @@ export default {
     },
     // 终端使用时长
     terminalRank() {
-      let aaa1 = this.start + " " + "00:00:00"
-      let aaa2 = this.end + " " + "23:59:59"
+      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
+      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getTerminalRank({
         startTime: aaa1,
         endTime: aaa2
@@ -151,7 +151,7 @@ export default {
         // const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : ['10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193']
         // const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength) : [42,38,30,22,18,12,10]
         const ipList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.ip) : []
-        const timeLength = res.data.length > 0 ? res.data.slice(0,8).map(item => item.timeLength/60) : []
+        const timeLength = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.timeLength/60/60).toFixed(2)) : []
         this.terminalChartInit(ipList,timeLength)
       });
     },
@@ -167,6 +167,7 @@ export default {
             fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
           },
         },
+
         grid: {
           left: "60px",
           top: "40px",
@@ -201,6 +202,17 @@ export default {
             data: timeLength,
             itemStyle: {
               color: '#419eff'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}小时',
+                textStyle: {
+                  color: '#333',
+                  fontSize: 12
+                }
+              }
             }
           }
         ]
@@ -208,14 +220,14 @@ export default {
     },
     // 用户使用时长
     userRank() {
-      let aaa1 = this.start + " " + "00:00:00"
-      let aaa2 = this.end + " " + "23:59:59"
+      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
+      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getUserRank({
         startTime: aaa1,
         endTime: aaa2
       }).then(res => {
         const nameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.name) : []
-        const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.totalUseMinutes/60) : []
+        const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.totalUseMinutes/60/60).toFixed(2)) : []
         this.userChartInit(nameList,totalUseMinutesList)
       });
     },
@@ -231,6 +243,7 @@ export default {
             fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
           },
         },
+
         grid: {
           left: "60px",
           top: "40px",
@@ -265,6 +278,17 @@ export default {
             data: totalUseMinutesList,
             itemStyle: {
               color: '#419eff'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}小时',
+                textStyle: {
+                  color: '#333',
+                  fontSize: 12
+                }
+              }
             }
           }
         ]
@@ -272,14 +296,14 @@ export default {
     },
     // 部门使用终端时长
     deptRank() {
-      let aaa1 = this.start + " " + "00:00:00"
-      let aaa2 = this.end + " " + "23:59:59"
+      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
+      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getDeptRank({
         startTime: aaa1,
         endTime: aaa2
       }).then(res => {
         const deptList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.dept) : []
-        const lenList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.len/60) : []
+        const lenList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.len/60/60).toFixed(2)) : []
         this.deptChartInit(deptList,lenList)
       });
     },
@@ -329,6 +353,17 @@ export default {
             data: lenList,
             itemStyle: {
               color: '#419eff'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}小时',
+                textStyle: {
+                  color: '#333',
+                  fontSize: 12
+                }
+              }
             }
           }
         ]
@@ -361,6 +396,7 @@ export default {
     //         fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
     //       },
     //     },
+
     //     grid: {
     //       left: "60px",
     //       top: "40px",
@@ -395,6 +431,17 @@ export default {
     //         data: countList,
     //         itemStyle: {
     //           color: '#419eff'
+    //         },
+    //         emphasis: {
+    //           label: {
+    //             show: true,
+    //             position: 'top',
+    //             formatter: '{c}次',
+    //             textStyle: {
+    //               color: '#333',
+    //               fontSize: 12
+    //             }
+    //           }
     //         }
     //       }
     //     ]
