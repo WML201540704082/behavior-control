@@ -171,7 +171,6 @@ export const getNetworkLogSlaveList = (params) => {
 }
 // 终端使用时长排名
 export const getTerminalRank = (params) => {
-  console.log(1122, params)
   return request({
     url: '/api/idevelop-ipc/ipcterminal/terminalRank',
     method: 'get',

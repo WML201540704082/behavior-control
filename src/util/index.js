@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const filterStatus = (value, arr, key = { keyLabel: 'label', keyValue: 'value'}) => {
     const filterItem = arr.filter(item => {
       	return item[key.keyValue] == value
@@ -31,3 +32,24 @@ export const formatSecondsToHMS = (seconds) => {
 
     return parts.join('');
 }
+
+/**
+ * Moment.js 判断开始时间到结束时间相差小于等于一天
+ * @param {String/Date/Moment} start - 开始时间（支持字符串/Date对象/Moment对象）
+ * @param {String/Date/Moment} end - 结束时间（格式与start一致即可）
+ * @returns {Boolean} true=小于一天，false=大于/等于一天
+ */
+export const isLessThanOneDay = (start, end) => {
+    // 转换为Moment对象（自动兼容各种时间格式）
+    const startMoment = moment(start);
+    const endMoment = moment(end);
+    
+    // 校验时间有效性（非必要，建议添加，避免无效时间导致判断错误）
+    if (!startMoment.isValid() || !endMoment.isValid()) {
+      throw new Error('开始时间/结束时间格式无效，请检查！');
+    }
+  
+    const oneDayMs = 86400000; // 一天的毫秒数
+    // 计算结束时间 - 开始时间的毫秒差，判断是否小于一天
+    return endMoment.diff(startMoment) <= oneDayMs;
+  }

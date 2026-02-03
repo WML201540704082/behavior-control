@@ -26,7 +26,7 @@ import JobUnit from "@/views/safeDanger/report/components/jobUnit";
 import AFTableColumn from 'af-table-column'
 
 import {selectDictLabel, resetForm} from "@/util/util";
-import { filterStatus, formatSecondsToHMS } from "@/util";
+import { filterStatus, formatSecondsToHMS, isLessThanOneDay } from "@/util";
 import {setPageContentHeight} from './util/setContent.js';
 import {download} from '@/util/util'
 import formRules from '@/util/formCheck'
@@ -43,6 +43,7 @@ Vue.prototype.getDicts = getDictList
 Vue.prototype.selectDictLabel = selectDictLabel
 Vue.prototype.filterStatus = filterStatus
 Vue.prototype.formatSecondsToHMS = formatSecondsToHMS
+Vue.prototype.isLessThanOneDay = isLessThanOneDay
 Vue.prototype.$closePage = closePage //关闭当前标签
 Vue.prototype.$asyncCatchApi = asyncCatchApi
 Vue.prototype.resetForm = resetForm

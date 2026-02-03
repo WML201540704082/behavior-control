@@ -40,14 +40,14 @@
         <div id="terminal_chart"></div>
         <div id="user_chart"></div>
         <div id="department_chart"></div>
-        <div id="url_chart"></div>
+        <div id="url_chart" v-show="isLessThanOneDay(start, end)"></div>
       </div>
     </div>
   </el-card>
 </template>
 <script>
 import * as echarts from "echarts";
-import {getTerminalRank,getUserRank,getDeptRank} from "@/api/terminal";
+import {getTerminalRank,getUserRank,getDeptRank,getUrlCountRank} from "@/api/terminal";
 import moment from 'moment'
 
 export default {
@@ -57,8 +57,8 @@ export default {
     return {
       turnoverLoading: false,
       datePicker: false,
-      start: moment().format('YYYY-MM-DD'),
-      end: moment().format('YYYY-MM-DD'),
+      start: moment().format('YYYY-MM-DD') + " " + "00:00:00",
+      end: moment().format('YYYY-MM-DD') + " " + "23:59:59",
       terminalChart: null,
       userChart: null,
       departmentChart: null,
@@ -67,7 +67,7 @@ export default {
       currentDate: 'today',
       // 日期选项配置
       dateOptions: [
-        // { label: '上月', value: 'lastMonth' },
+        { label: '上月', value: 'lastMonth' },
         { label: '昨天', value: 'yesterday' },
         { label: '今天', value: 'today' },
         { label: '本月', value: 'month' }
@@ -85,7 +85,7 @@ export default {
     this.terminalRank()
     this.userRank()
     this.deptRank()
-    // this.urlCountRank()
+    this.urlCountRank()
   },
   methods: {
     // 切换日期选择
@@ -96,29 +96,31 @@ export default {
       let end = ''
       switch(value) {
       case 'today':
-        start = moment()
-        end = moment()
+        start = moment().format('YYYY-MM-DD') + " " + "00:00:00"
+        end = moment().format('YYYY-MM-DD') + " " + "23:59:59"
         break
       case 'yesterday':
-        start = moment().subtract(1, 'days')
-        end = moment().subtract(1, 'days')
+        start = moment().subtract(1, 'days').format('YYYY-MM-DD') + " " + "00:00:00"
+        end = moment().subtract(1, 'days').format('YYYY-MM-DD') + " " + "23:59:59"
         break
       case 'month':
-        start = moment().startOf('month')
-        end = moment()
+        start = moment().startOf('month').format('YYYY-MM-DD') + " " + "00:00:00"
+        end = moment().format('YYYY-MM-DD HH:mm:ss')
         break
       case 'lastMonth':
-        start = moment().startOf('month').subtract(1, 'month')
-        end = moment().endOf('month').subtract(1, 'month').endOf('month')
+        start = moment().startOf('month').subtract(1, 'month').format('YYYY-MM-DD') + " " + "00:00:00"
+        end = moment().endOf('month').subtract(1, 'month').endOf('month').format('YYYY-MM-DD') + " " + "23:59:59"
       default:
         break
       }
-      this.start = start.format('YYYY-MM-DD')
-      this.end = end.format('YYYY-MM-DD')
+      this.start = start
+      this.end = end
       this.terminalRank()
       this.userRank()
       this.deptRank()
-      // this.urlCountRank()
+      if (value == 'today' || value == 'yesterday') {
+        this.urlCountRank()
+      }
     },
     dateRange(value, type) {
       if (type === 'start') {
@@ -142,11 +144,9 @@ export default {
     },
     // 终端使用时长
     terminalRank() {
-      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
-      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getTerminalRank({
-        startTime: aaa1,
-        endTime: aaa2
+        startTime: this.start,
+        endTime: this.end
       }).then(res => {
         // const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : ['10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193']
         // const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength) : [42,38,30,22,18,12,10]
@@ -220,11 +220,9 @@ export default {
     },
     // 用户使用时长
     userRank() {
-      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
-      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getUserRank({
-        startTime: aaa1,
-        endTime: aaa2
+        startTime: this.start,
+        endTime: this.end
       }).then(res => {
         const nameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.name) : []
         const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.totalUseMinutes/60/60).toFixed(2)) : []
@@ -296,11 +294,9 @@ export default {
     },
     // 部门使用终端时长
     deptRank() {
-      let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
-      let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
       getDeptRank({
-        startTime: aaa1,
-        endTime: aaa2
+        startTime: this.start,
+        endTime: this.end
       }).then(res => {
         const deptList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.dept) : []
         const lenList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.len/60/60).toFixed(2)) : []
@@ -370,81 +366,79 @@ export default {
       });
     },
     // 业务系统访问次数
-    // urlCountRank() {
-    //   let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
-    //   let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
-    //   getUrlCountRank({
-    //     start: aaa1,
-    //     end: aaa2
-    //   }).then(res => {
-    //     const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName || item.url) : []
-    //     const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
-    //     this.urlCountChartInit(businessNameList,countList)
-    //   });
-    // },
-    // urlCountChartInit(businessNameList,countList) {
-    //   this.urlChart.setOption({
-    //     title: {
-    //       text: "业务系统访问次数",
-    //       left: 'center',
-    //       textStyle: {
-    //         color: "#000000", // 标题颜色
-    //         fontSize: 14, // 默认值：18
-    //         fontStyle: "normal", // normal:正常风格（默认值）,italic:倾斜体
-    //         fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
-    //       },
-    //     },
+    urlCountRank() {
+      getUrlCountRank({
+        start: this.start,
+        end: this.end
+      }).then(res => {
+        const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName || item.url) : []
+        const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
+        this.urlCountChartInit(businessNameList,countList)
+      });
+    },
+    urlCountChartInit(businessNameList,countList) {
+      this.urlChart.setOption({
+        title: {
+          text: "业务系统访问次数",
+          left: 'center',
+          textStyle: {
+            color: "#000000", // 标题颜色
+            fontSize: 14, // 默认值：18
+            fontStyle: "normal", // normal:正常风格（默认值）,italic:倾斜体
+            fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
+          },
+        },
 
-    //     grid: {
-    //       left: "60px",
-    //       top: "40px",
-    //       right: "10px",
-    //       bottom: "30px"
-    //     },
-    //     xAxis: {
-    //       show: true,
-    //       axisTick: {
-    //         show: false,
-    //         length: 20 // 竖线的长度
-    //       },
-    //       axisLabel: {
-    //         show: true,
-    //         textStyle: {
-    //             fontSize: 10
-    //         }
-    //       },
-    //       data: businessNameList,
-    //     },
-    //     yAxis: {
-    //       axisLabel: {
-    //         show: true,
-    //         formatter: '{value}次',
-    //       }
-    //     },
-    //     series: [
-    //       {
-    //         name: "访问来源",
-    //         type: "bar",
-    //         barWidth: 30,
-    //         data: countList,
-    //         itemStyle: {
-    //           color: '#419eff'
-    //         },
-    //         emphasis: {
-    //           label: {
-    //             show: true,
-    //             position: 'top',
-    //             formatter: '{c}次',
-    //             textStyle: {
-    //               color: '#333',
-    //               fontSize: 12
-    //             }
-    //           }
-    //         }
-    //       }
-    //     ]
-    //   });
-    // },
+        grid: {
+          left: "60px",
+          top: "40px",
+          right: "10px",
+          bottom: "30px"
+        },
+        xAxis: {
+          show: true,
+          axisTick: {
+            show: false,
+            length: 20 // 竖线的长度
+          },
+          axisLabel: {
+            show: true,
+            textStyle: {
+                fontSize: 10
+            }
+          },
+          data: businessNameList,
+        },
+        yAxis: {
+          axisLabel: {
+            show: true,
+            formatter: '{value}次',
+          }
+        },
+        series: [
+          {
+            name: "访问来源",
+            type: "bar",
+            barWidth: 30,
+            data: countList,
+            itemStyle: {
+              color: '#419eff'
+            },
+            emphasis: {
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}次',
+                textStyle: {
+                  color: '#333',
+                  fontSize: 12
+                }
+              }
+            }
+          }
+        ]
+      });
+    },
   }
 };
 </script>
@@ -495,8 +489,8 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
   margin-top: 200px;
   scrollbar-width: none; /* Firefox 隐藏滚动条 */
   -ms-overflow-style: none; /* IE/Edge 旧版兼容（可选） */
