@@ -40,7 +40,7 @@
         <div id="terminal_chart"></div>
         <div id="user_chart"></div>
         <div id="department_chart"></div>
-        <div id="url_chart" v-show="isLessThanOneDay(start, end)"></div>
+        <!-- <div id="url_chart" v-show="isLessThanOneDay(start, end)"></div> -->
       </div>
     </div>
   </el-card>
@@ -67,7 +67,7 @@ export default {
       currentDate: 'today',
       // 日期选项配置
       dateOptions: [
-        { label: '上月', value: 'lastMonth' },
+        // { label: '上月', value: 'lastMonth' },
         { label: '昨天', value: 'yesterday' },
         { label: '今天', value: 'today' },
         { label: '本月', value: 'month' }
@@ -132,7 +132,7 @@ export default {
         this.terminalRank()
         this.userRank()
         this.deptRank()
-        // this.urlCountRank()
+        this.urlCountRank()
       }
     },
     // 切换成日期选择
