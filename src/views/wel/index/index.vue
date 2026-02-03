@@ -151,7 +151,7 @@ export default {
         // const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : ['10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193']
         // const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength) : [42,38,30,22,18,12,10]
         const ipList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.ip) : []
-        const timeLength = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.timeLength/60/60).toFixed(2)) : []
+        const timeLength = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.timeLength/60).toFixed(2)) : []
         this.terminalChartInit(ipList,timeLength)
       });
     },
@@ -371,10 +371,8 @@ export default {
     },
     // 业务系统访问次数
     // urlCountRank() {
-    //   console.log(999, this.start)
-    //   let aaa1 = this.start + " " + "00:00:00"
-    //   let aaa2 = this.end + " " + "23:59:59"
-    //   console.log(9992, aaa1)
+    //   let aaa1 = moment(this.start).format('YYYY-MM-DD') + " " + "00:00:00"
+    //   let aaa2 = moment(this.end).format('YYYY-MM-DD') + " " + "23:59:59"
     //   getUrlCountRank({
     //     start: aaa1,
     //     end: aaa2

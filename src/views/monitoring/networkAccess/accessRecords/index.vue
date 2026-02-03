@@ -39,6 +39,7 @@
           size="small"
           :data="dataList"
           :height="tableHeight"
+          :loading="loading"
           empty-text="请先选择登录用户或填写终端IP进行搜索"
         >
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
@@ -162,6 +163,8 @@
             this.loading = false;
             this.onLoad();
           });
+        } else {
+          this.onLoad();
         }
       },
       searchReset() {
