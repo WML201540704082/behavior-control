@@ -40,7 +40,7 @@
         <div id="terminal_chart"></div>
         <div id="user_chart"></div>
         <div id="department_chart"></div>
-        <!-- <div id="url_chart" v-show="isLessThanOneDay(start, end)"></div> -->
+        <div id="url_chart" v-show="isLessThanOneDay(start, end)"></div>
       </div>
     </div>
   </el-card>
@@ -371,6 +371,8 @@ export default {
         start: this.start,
         end: this.end
       }).then(res => {
+        // const businessNameList = ['业务系统业务系统业务系统','业务系统业务系统业务系统','业务系统业务系统业务系统','业务系统业务系统业务系统',]
+        // const countList = [1,2,3,4]
         const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName || item.url) : []
         const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
         this.urlCountChartInit(businessNameList,countList)
@@ -388,12 +390,11 @@ export default {
             fontWeight: "bold" // normal:正常粗细（默认值）,bold/bolder:粗体,lighter:正常粗细
           },
         },
-
         grid: {
           left: "60px",
           top: "40px",
           right: "10px",
-          bottom: "30px"
+          bottom: "90px",
         },
         xAxis: {
           show: true,
@@ -405,7 +406,8 @@ export default {
             show: true,
             textStyle: {
                 fontSize: 10
-            }
+            },
+            rotate: 20
           },
           data: businessNameList,
         },
@@ -499,6 +501,9 @@ export default {
   > div {
     width: 50%;
     height: 300px;
+  }
+  > #url_chart {
+    height: 360px;
   }
 }
 </style>
