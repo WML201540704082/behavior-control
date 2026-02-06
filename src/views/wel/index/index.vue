@@ -371,7 +371,7 @@ export default {
         start: this.start,
         end: this.end
       }).then(res => {
-        // const businessNameList = ['业务系统业务系统业务系统','业务系统业务系统业务系统','业务系统业务系统业务系统','业务系统业务系统业务系统',]
+        // const businessNameList = ['业务系统业务系统业务系统哈哈哈','业务系统业务系统业务','业务系统业','业务系统业务系统业务系统',]
         // const countList = [1,2,3,4]
         const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName || item.url) : []
         const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
@@ -407,7 +407,14 @@ export default {
             textStyle: {
                 fontSize: 10
             },
-            rotate: 20
+            interval: 0,
+            align: 'center',
+            formatter: function(value) {
+              if (value.length > 8) {
+                return value.substring(0, 8) + '\n' + value.substring(8);
+              }
+              return value;
+            }
           },
           data: businessNameList,
         },

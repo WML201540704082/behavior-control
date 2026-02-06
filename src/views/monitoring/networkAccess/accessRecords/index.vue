@@ -28,7 +28,7 @@
         <el-row>
           <formTitle :titleText="'查询网络访问记录列表'" :titleType="'page_title'">
             <div slot="rightBtnBox">
-              <el-button type="primary" size="small" icon="el-icon-search" @click="handleQuery">查询</el-button>
+              <el-button type="primary" :loading="loading" size="small" icon="el-icon-search" @click="handleQuery">查询</el-button>
               <el-button class="border-btn" size="small" icon="el-icon-refresh" @click="searchReset">重置</el-button>
             </div>
           </formTitle>
