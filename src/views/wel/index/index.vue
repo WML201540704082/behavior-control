@@ -373,7 +373,7 @@ export default {
       }).then(res => {
         // const businessNameList = ['业务系统业务系统业务系统哈哈哈','业务系统业务系统业务','业务系统业','业务系统业务系统业务系统',]
         // const countList = [1,2,3,4]
-        const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName || item.url) : []
+        const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName) : []
         const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
         this.urlCountChartInit(businessNameList,countList)
       });
