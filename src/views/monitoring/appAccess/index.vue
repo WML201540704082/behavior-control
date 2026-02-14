@@ -113,6 +113,9 @@ export default {
         en: 'MongoDBCompass.exe',
         name: 'MongoDBCompass'
       },{
+        en: 'Night.exe',
+        name: 'Night'
+      },{
         en: 'Postman.exe',
         name: 'Postman'
       },{
@@ -139,6 +142,9 @@ export default {
       },{
         en: 'icallT_d.exe',
         name: '一点通'
+      },{
+        en: '智慧办公助手.exe',
+        name: '智慧办公助手'
       }]
     };
   },
