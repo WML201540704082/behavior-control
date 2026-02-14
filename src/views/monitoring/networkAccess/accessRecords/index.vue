@@ -20,7 +20,7 @@
                 <el-input v-model="searchForm.businessName"  placeholder="请输入业务系统名称" clearable style="width:100%"></el-input>
               </el-form-item>
             </el-col> -->
-            <el-button style="border: 1px #ffffff solid;position: absolute;right: 10px;" v-model="isSlaveMode" @click="handleModeChange"></el-button>
+            <!-- <el-button style="border: 1px #ffffff solid;position: absolute;right: 10px;" v-model="isSlaveMode" @click="handleModeChange"></el-button> -->
           </el-row>
         </el-form>
       </div>
@@ -43,7 +43,6 @@
           empty-text="请先选择登录用户或填写终端IP进行搜索"
         >
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
-          <!-- <el-table-column prop="name" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column> -->
           <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="url" label="URL地址" min-width="150" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="businessName" label="业务系统名称" min-width="100" align="center" show-overflow-tooltip></el-table-column>

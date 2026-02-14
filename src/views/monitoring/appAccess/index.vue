@@ -16,8 +16,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="应用名称" prop="appName">
+            <!-- <el-form-item label="应用名称" prop="appName">
               <el-input v-model="searchForm.appName"  placeholder="请输入业务系统名称" clearable style="width:100%"></el-input>
+            </el-form-item> -->
+            <el-form-item label="应用名称" prop="appName">
+              <el-select v-model="searchForm.appName" filterable placeholder="请选择登录用户" clearable style="width:100%">
+                <el-option v-for="user in appList" :key="user.en" :label="user.name" :value="user.en"></el-option>
+              </el-select>
             </el-form-item>
           </el-col>
         </el-row>
@@ -85,6 +90,56 @@ export default {
       total: 0,
       // 用户列表
       userList: [],
+      // 应用列表
+      appList: [{
+        en: 'msedge.exe',
+        name: 'Edge浏览器'
+      },{
+        en: 'EVCapture.exe',
+        name: 'EV录屏'
+      },{
+        en: 'firefox.exe',
+        name: '火狐浏览器'
+      },{
+        en: 'chrome.exe',
+        name: '谷歌浏览器'
+      },{
+        en: 'NWIM.exe',
+        name: '内网IM'
+      },{
+        en: '360net.exe',
+        name: '统一浏览器'
+      },{
+        en: 'MongoDBCompass.exe',
+        name: 'MongoDBCompass'
+      },{
+        en: 'Postman.exe',
+        name: 'Postman'
+      },{
+        en: 'SoftMgr.exe',
+        name: '企业软件管家'
+      },{
+        en: 'naccli.exe',
+        name: '认证客户端'
+      },{
+        en: 'et.exe',
+        name: 'WPS表格'
+      },{
+        en: 'wpp.exe',
+        name: 'WPS演示'
+      },{
+        en: 'wps.exe',
+        name: 'WPS文字'
+      },{
+        en: 'wpspdf.exe',
+        name: 'WPS PDF'
+      },{
+        en: '360Safe.exe',
+        name: '信通一体化运维管理-漏洞修复'
+      },{
+        en: 'icallT_d.exe',
+        name: '一点通'
+      }]
     };
   },
   components: {moment},
