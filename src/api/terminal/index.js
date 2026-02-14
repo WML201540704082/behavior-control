@@ -169,6 +169,16 @@ export const getNetworkLogSlaveList = (params) => {
     params: params
   })
 }
+
+// 本地应用访问记录
+export const getAppLogList = (params) => {
+  return request({
+    url: '/api/idevelop-ipc/ipclocalapplog/list',
+    method: 'get',
+    params: params
+  })
+}
+
 // 终端使用时长排名
 export const getTerminalRank = (params) => {
   return request({
