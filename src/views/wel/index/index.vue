@@ -150,8 +150,8 @@ export default {
       }).then(res => {
         // const ipList = res.data.length > 0 ? res.data.map(item => item.ip) : ['10.192.228.183','10.192.228.117','10.192.228.156','10.192.228.173','10.192.228.149','10.192.228.109','10.192.228.193']
         // const timeLength = res.data.length > 0 ? res.data.map(item => item.timeLength) : [42,38,30,22,18,12,10]
-        const ipList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.ip) : []
-        const timeLength = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.timeLength/60).toFixed(2)) : []
+        const ipList = res.data.length > 0 ? res.data.slice(0,7).map(item => item.ip) : []
+        const timeLength = res.data.length > 0 ? res.data.slice(0,7).map(item => (item.timeLength/60).toFixed(2)) : []
         this.terminalChartInit(ipList,timeLength)
       });
     },
@@ -224,8 +224,8 @@ export default {
         startTime: this.start,
         endTime: this.end
       }).then(res => {
-        const nameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.name) : []
-        const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.totalUseMinutes/60/60).toFixed(2)) : []
+        const nameList = res.data.length > 0 ? res.data.slice(0,7).map(item => item.name) : []
+        const totalUseMinutesList = res.data.length > 0 ? res.data.slice(0,7).map(item => (item.totalUseMinutes/60/60).toFixed(2)) : []
         this.userChartInit(nameList,totalUseMinutesList)
       });
     },
@@ -298,8 +298,8 @@ export default {
         startTime: this.start,
         endTime: this.end
       }).then(res => {
-        const deptList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.dept) : []
-        const lenList = res.data.length > 0 ? res.data.slice(0,8).map(item => (item.len/60/60).toFixed(2)) : []
+        const deptList = res.data.length > 0 ? res.data.slice(0,7).map(item => item.dept) : []
+        const lenList = res.data.length > 0 ? res.data.slice(0,7).map(item => (item.len/60/60).toFixed(2)) : []
         this.deptChartInit(deptList,lenList)
       });
     },
@@ -371,12 +371,13 @@ export default {
         start: this.start,
         end: this.end
       }).then(res => {
-        // const businessNameList = ['业务系统业务系统业务系统哈哈哈','业务系统业务系统业务','业务系统业','业务系统业务系统业务系统',]
-        // const countList = [1,2,3,4]
-        const businessNameList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.businessName) : []
-        const countList = res.data.length > 0 ? res.data.slice(0,8).map(item => item.count) : []
+        const businessNameList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统').map(item => item.businessName).slice(0,7) : []
+        const countList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统').map(item => item.count).slice(0,7) : []
         this.urlCountChartInit(businessNameList,countList)
       });
+      // const businessNameList = ['PMS3.0','业务系统业务系统业务','业务系统业','业务系统业务系统业务系统']
+      // const countList = [1,2,3,4]
+      // this.urlCountChartInit(businessNameList,countList)
     },
     urlCountChartInit(businessNameList,countList) {
       this.urlChart.setOption({

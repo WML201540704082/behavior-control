@@ -21,7 +21,7 @@
             </el-form-item> -->
             <el-form-item label="应用名称" prop="appName">
               <el-select v-model="searchForm.appName" filterable placeholder="请选择登录用户" clearable style="width:100%">
-                <el-option v-for="user in appList" :key="user.en" :label="user.name" :value="user.en"></el-option>
+                <el-option v-for="user in appList" :key="user.label" :label="user.label" :value="user.value"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -47,7 +47,11 @@
       >
           <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
           <el-table-column prop="ip" label="访问终端IP" min-width="100" align="center" show-overflow-tooltip></el-table-column>
-          <el-table-column prop="appName" label="应用名称" min-width="100" align="center" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="appName" label="应用名称" min-width="100" align="center" show-overflow-tooltip>
+            <template  slot-scope="scope">
+              <span>{{filterStatus(scope.row.appName,appList)}}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="userName" label="登录用户" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="userDept" label="用户部门" min-width="100" align="center" show-overflow-tooltip></el-table-column>
           <el-table-column prop="startTime" label="访问开始时间" min-width="100" align="center" show-overflow-tooltip></el-table-column>
@@ -92,59 +96,59 @@ export default {
       userList: [],
       // 应用列表
       appList: [{
-        en: 'msedge.exe',
-        name: 'Edge浏览器'
+        value: 'msedge.exe',
+        label: 'Edge浏览器'
       },{
-        en: 'EVCapture.exe',
-        name: 'EV录屏'
+        value: 'EVCapture.exe',
+        label: 'EV录屏'
       },{
-        en: 'firefox.exe',
-        name: '火狐浏览器'
+        value: 'firefox.exe',
+        label: '火狐浏览器'
       },{
-        en: 'chrome.exe',
-        name: '谷歌浏览器'
+        value: 'chrome.exe',
+        label: '谷歌浏览器'
       },{
-        en: 'NWIM.exe',
-        name: '内网IM'
+        value: 'NWIM.exe',
+        label: '内网IM'
       },{
-        en: '360net.exe',
-        name: '统一浏览器'
+        value: '360net.exe',
+        label: '统一浏览器'
       },{
-        en: 'MongoDBCompass.exe',
-        name: 'MongoDBCompass'
+        value: 'MongoDBCompass.exe',
+        label: 'MongoDBCompass'
       },{
-        en: 'Night.exe',
-        name: 'Night'
+        value: 'Night.exe',
+        label: 'Night'
       },{
-        en: 'Postman.exe',
-        name: 'Postman'
+        value: 'Postman.exe',
+        label: 'Postman'
       },{
-        en: 'SoftMgr.exe',
-        name: '企业软件管家'
+        value: 'SoftMgr.exe',
+        label: '企业软件管家'
       },{
-        en: 'naccli.exe',
-        name: '认证客户端'
+        value: 'naccli.exe',
+        label: '认证客户端'
       },{
-        en: 'et.exe',
-        name: 'WPS表格'
+        value: 'et.exe',
+        label: 'WPS表格'
       },{
-        en: 'wpp.exe',
-        name: 'WPS演示'
+        value: 'wpp.exe',
+        label: 'WPS演示'
       },{
-        en: 'wps.exe',
-        name: 'WPS文字'
+        value: 'wps.exe',
+        label: 'WPS文字'
       },{
-        en: 'wpspdf.exe',
-        name: 'WPS PDF'
+        value: 'wpspdf.exe',
+        label: 'WPS PDF'
       },{
-        en: '360Safe.exe',
-        name: '信通一体化运维管理-漏洞修复'
+        value: '360Safe.exe',
+        label: '信通一体化运维管理-漏洞修复'
       },{
-        en: 'icallT_d.exe',
-        name: '一点通'
+        value: 'icallT_d.exe',
+        label: '一点通'
       },{
-        en: '智慧办公助手.exe',
-        name: '智慧办公助手'
+        value: '智慧办公助手.exe',
+        label: '智慧办公助手'
       }]
     };
   },
