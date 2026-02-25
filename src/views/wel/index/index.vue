@@ -371,13 +371,54 @@ export default {
         start: this.start,
         end: this.end
       }).then(res => {
-        const businessNameList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统').map(item => item.businessName).slice(0,7) : []
+        const businessNameList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统' && item.businessName != '德州市OAip版2')
+        .map(item => {
+            // 第一层map先提取businessName，再做名称映射
+            const name = item.businessName;
+            if (name === '能源互联网营销服务系统') {
+              return '营销2.0';
+            } else if (name === '德州市OAip版2') {
+              return 'OA';
+            } else if (name === '调度oms（地调入口2）') {
+              return '调度oms';
+            } else if (name === '人力资源管理信息系统2.0') {
+              return '人资2.0';
+            } else {
+              return name;
+            }
+          })
+          .slice(0, 7) : []
         const countList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统').map(item => item.count).slice(0,7) : []
         this.urlCountChartInit(businessNameList,countList)
       });
-      // const businessNameList = ['PMS3.0','业务系统业务系统业务','业务系统业','业务系统业务系统业务系统']
-      // const countList = [1,2,3,4]
-      // this.urlCountChartInit(businessNameList,countList)
+
+      // const xx = [{
+      //   businessName: "能源互联网营销服务系统",
+      //   count: 1,
+      // },{
+      //   businessName: "德州市OAip版2",
+      //   count: 12,
+      // }]
+      // const businessNameList = xx.length > 0 ? xx.filter(item => item.businessName !== 'PMS3.0系统') // 过滤掉PMS3.0系统
+      //       .map(item => {
+      //         // 第一层map先提取businessName，再做名称映射
+      //         const name = item.businessName;
+      //         if (name === '能源互联网营销服务系统') {
+      //           return '营销2.0';
+      //         } else if (name === '德州市OAip版2') {
+      //           return 'OA';
+      //         } else if (name === '调度oms（地调入口2）') {
+      //           return '调度oms';
+      //         } else if (name === '人力资源管理信息系统2.0') {
+      //           return '人资2.0';
+      //         } else {
+      //           return name;
+      //         }
+      //       })
+      //       .slice(0, 7) // 只取前7个
+      //   : [];
+      //   const countList = xx.length > 0 ? xx.filter(item => item.businessName != 'PMS3.0系统').map(item => item.count).slice(0,7) : []
+      //   this.urlCountChartInit(businessNameList,countList)
     },
     urlCountChartInit(businessNameList,countList) {
       this.urlChart.setOption({
