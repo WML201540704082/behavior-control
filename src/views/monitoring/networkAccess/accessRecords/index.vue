@@ -199,9 +199,47 @@
               endTime: item.endTime ? moment(item.endTime).format("YYYY-MM-DD HH:mm:ss") : moment(item.startTime).add(30,'seconds').format("YYYY-MM-DD HH:mm:ss"),
               accessLength: item.accessLength == -1 ? 30 : item.accessLength
             }
-          });
+          }).filter(item => item.accessLength < 28800);
           this.loading = false;
         });
+
+        // this.dataList = [{
+        //   accessLength: 10000,
+        //   startTime: "2025-11-21T08:00:00",
+        //   endTime: "2025-11-21T12:00:00",
+        //   businessName: "业务系统test",
+        //   ip: "12.12.11.2",
+        //   url: "www.sss.xx"
+        // },{
+        //   accessLength: 0,
+        //   startTime: "2025-11-21T08:00:00",
+        //   endTime: "2025-11-21T12:00:00",
+        //   businessName: "业务系统test",
+        //   ip: "12.12.11.2",
+        //   url: "www.sss.xx"
+        // },{
+        //   accessLength: 123,
+        //   startTime: "2025-11-21T08:00:00",
+        //   endTime: "2025-11-21T12:00:00",
+        //   businessName: "业务系统test",
+        //   ip: "12.12.11.2",
+        //   url: "www.sss.xx"
+        // },{
+        //   accessLength: 1232,
+        //   startTime: "2025-11-21T08:00:00",
+        //   endTime: "2025-11-21T12:00:00",
+        //   businessName: "",
+        //   ip: "12.12.11.2",
+        //   url: "www.sss.xx"
+        // }].map(item=> {
+        //   return {
+        //     ...item,
+        //     startTime: moment(item.startTime).format("YYYY-MM-DD HH:mm:ss"),
+        //     endTime: item.endTime ? moment(item.endTime).format("YYYY-MM-DD HH:mm:ss") : moment(item.startTime).add(30,'seconds').format("YYYY-MM-DD HH:mm:ss"),
+        //     accessLength: item.accessLength == -1 ? 30 : item.accessLength
+        //   }
+        // }).filter(item=>item.businessName && item.accessLength > 0 && item.accessLength < 28800);
+        // this.loading = false;
       },
     }
   };

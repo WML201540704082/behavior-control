@@ -57,19 +57,19 @@ export default {
     return {
       turnoverLoading: false,
       datePicker: false,
-      start: moment().format('YYYY-MM-DD') + " " + "00:00:00",
-      end: moment().format('YYYY-MM-DD') + " " + "23:59:59",
+      start: moment().subtract(1, 'days').format('YYYY-MM-DD') + " " + "00:00:00",
+      end: moment().subtract(1, 'days').format('YYYY-MM-DD') + " " + "23:59:59",
       terminalChart: null,
       userChart: null,
       departmentChart: null,
       urlChart: null,
       // 当前选中的日期类型
-      currentDate: 'today',
+      currentDate: 'yesterday',
       // 日期选项配置
       dateOptions: [
         // { label: '上月', value: 'lastMonth' },
         { label: '昨天', value: 'yesterday' },
-        { label: '今天', value: 'today' },
+        // { label: '今天', value: 'today' },
         { label: '本月', value: 'month' }
       ],
       value1: '',
@@ -371,7 +371,7 @@ export default {
         start: this.start,
         end: this.end
       }).then(res => {
-        const businessNameList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统' && item.businessName != '德州市OAip版2')
+        const businessNameList = res.data.length > 0 ? res.data.filter(item => item.businessName != 'PMS3.0系统' && item.businessName != '德州市OAip版2' && item.businessName != '考勤系统')
         .map(item => {
             // 第一层map先提取businessName，再做名称映射
             const name = item.businessName;

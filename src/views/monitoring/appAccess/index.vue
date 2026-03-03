@@ -111,7 +111,7 @@ export default {
         value: 'NWIM.exe',
         label: '内网IM'
       },{
-        value: '360net.exe',
+        value: '360ent.exe',
         label: '统一浏览器'
       },{
         value: 'MongoDBCompass.exe',
@@ -149,6 +149,27 @@ export default {
       },{
         value: '智慧办公助手.exe',
         label: '智慧办公助手'
+      },{
+        value: '360se.exe',
+        label: '360安全浏览器'
+      },{
+        value: 'jianying_jianyingpro_hailiang_1.2.8_installer.exe',
+        label: '剪映'
+      },{
+        value: 'QiYuanMaster.exe',
+        label: '启源恢复大师'
+      },{
+        value: 'UpdatePro.exe',
+        label: '远光认证精灵'
+      },{
+        value: 'HipsMain.exe',
+        label: '火绒安全软件'
+      },{
+        value: 'MocCamera.exe',
+        label: '安科信创高拍仪'
+      },{
+        value: 'software.exe',
+        label: '财务管理信息系统'
       }]
     };
   },
