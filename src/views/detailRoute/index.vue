@@ -9,6 +9,7 @@
 import terminalAdd from "@/views/terminal/terminalList/terminalAdd.vue"
 import userAdd from "@/views/terminal/userManagement/userAdd.vue"
 import systemAdd from "@/views/monitoring/networkAccess/systemMaintenance/systemAdd.vue"
+import desktopAppAdd from "@/views/monitoring/appAccess/desktopMaintenance/desktopAppAdd.vue"
 
 
 
@@ -70,6 +71,7 @@ export default {
     terminalAdd,
     userAdd,
     systemAdd,
+    desktopAppAdd,
 
 
 
