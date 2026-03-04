@@ -60,7 +60,7 @@
   </template>
   
   <script>
-  import {getDesktopAppList, desktopAppRemove} from "@/api/terminal/desktopApp";
+  import {getDesktopAppList, desktopAppRemove} from "@/api/terminal";
   import moment from "moment";
   export default {
     data() {
@@ -79,12 +79,16 @@
       };
     },
     components: {moment},
-    mounted(){
+    mounted(){    
       // 设置页面元素高度
       this.setPageContentHeight()
       // 设置表格高度
       this.setTableHeight()
       //加载数据
+      this.onLoad();
+    },
+    activated() {
+      // 当组件被激活时（从其他页面跳转回来），重新加载数据
       this.onLoad();
     },
     methods: {

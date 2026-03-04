@@ -2,19 +2,19 @@
   <basic-container>
     <div class="page_form"></div>
     <div class="page_body">
-      <formTitle :titleText="'业务系统维护新增信息'" :titleType="'page_title'"></formTitle>
+      <formTitle :titleText="'桌面应用维护新增信息'" :titleType="'page_title'"></formTitle>
       <el-scrollbar style="height:calc(100% - 50px - 55px)">
         <el-form :model="form" ref="dataForm" class="xt_form" label-width="150px">
           <el-row>
             <el-col :span="8">
-              <el-form-item label="桌面应用名称" prop="appName">
+              <el-form-item label="桌面应用名称" prop="appName" :rules="[{ required: true, message: '请输入桌面应用名称'}]">
                 <el-input v-model="form.appName" placeholder="请输入桌面应用名称" style="width: 500px"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="主程序文件名" prop="mainExe">
+              <el-form-item label="主程序文件名" prop="mainFileName" :rules="[{ required: true, message: '请输入主程序文件名'}]">
                 <el-input v-model="form.mainFileName" placeholder="请输入主程序文件名" style="width: 500px"></el-input>
               </el-form-item>
             </el-col>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {getDesktopAppDetail, addDesktopApp, updateDesktopApp} from "@/api/terminal/desktopApp";
+import {getDesktopAppDetail, addDesktopApp, updateDesktopApp} from "@/api/terminal";
 export default {
   data() {
     return {
@@ -47,15 +47,7 @@ export default {
       },
       loading: true,
       isEdit: true,
-      btnLoading: false,
-      rules: {
-        appName: [
-          { required: true, message: '请输入桌面应用名称', trigger: 'blur' }
-        ],
-        mainFileName: [
-          { required: true, message: '请输入主程序文件名', trigger: 'blur' }
-        ]
-      },
+      btnLoading: false
     };
   },
   async mounted() {
@@ -98,7 +90,6 @@ export default {
     handleReset() {
       //返回
       this.$closePage('/monitoring/appAccess/desktopMaintenance/index');
-      this.$forceUpdate()
     },
     beforeOpen() {
       getEmpty().then(res => {

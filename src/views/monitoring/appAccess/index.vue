@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import {getAppLogList,getUserList} from "@/api/terminal";
+import {getAppLogList,getUserList,getDesktopAppList} from "@/api/terminal";
 import moment from "moment";
 export default {
   data() {
@@ -95,82 +95,7 @@ export default {
       // 用户列表
       userList: [],
       // 应用列表
-      appList: [{
-        value: 'msedge.exe',
-        label: 'Edge浏览器'
-      },{
-        value: 'EVCapture.exe',
-        label: 'EV录屏'
-      },{
-        value: 'firefox.exe',
-        label: '火狐浏览器'
-      },{
-        value: 'chrome.exe',
-        label: '谷歌浏览器'
-      },{
-        value: 'NWIM.exe',
-        label: '内网IM'
-      },{
-        value: '360ent.exe',
-        label: '统一浏览器'
-      },{
-        value: 'MongoDBCompass.exe',
-        label: 'MongoDBCompass'
-      },{
-        value: 'Night.exe',
-        label: 'Night'
-      },{
-        value: 'Postman.exe',
-        label: 'Postman'
-      },{
-        value: 'SoftMgr.exe',
-        label: '企业软件管家'
-      },{
-        value: 'naccli.exe',
-        label: '认证客户端'
-      },{
-        value: 'et.exe',
-        label: 'WPS表格'
-      },{
-        value: 'wpp.exe',
-        label: 'WPS演示'
-      },{
-        value: 'wps.exe',
-        label: 'WPS文字'
-      },{
-        value: 'wpspdf.exe',
-        label: 'WPS PDF'
-      },{
-        value: '360Safe.exe',
-        label: '信通一体化运维管理-漏洞修复'
-      },{
-        value: 'icallT_d.exe',
-        label: '一点通'
-      },{
-        value: '智慧办公助手.exe',
-        label: '智慧办公助手'
-      },{
-        value: '360se.exe',
-        label: '360安全浏览器'
-      },{
-        value: 'jianying_jianyingpro_hailiang_1.2.8_installer.exe',
-        label: '剪映'
-      },{
-        value: 'QiYuanMaster.exe',
-        label: '启源恢复大师'
-      },{
-        value: 'UpdatePro.exe',
-        label: '远光认证精灵'
-      },{
-        value: 'HipsMain.exe',
-        label: '火绒安全软件'
-      },{
-        value: 'MocCamera.exe',
-        label: '安科信创高拍仪'
-      },{
-        value: 'software.exe',
-        label: '财务管理信息系统'
-      }]
+      appList: []
     };
   },
   components: {moment},
@@ -183,6 +108,7 @@ export default {
     this.setTableHeight()
     // 加载用户列表
     this.loadUserList();
+    this.getAppList()
   },
   methods: {
     // 设置表格高度
@@ -208,6 +134,20 @@ export default {
           });
           this.userList = uniqueUsers;
         }
+      });
+    },
+    // 加载应用列表
+    getAppList() {
+      getDesktopAppList({
+        current: 1,
+        size: 100,
+      }).then(res => {
+        this.appList = res.data.records.map(item=>{
+          return {
+            label: item.appName,
+            value: item.mainFileName
+          }
+        })
       });
     },
     searchReset() {
