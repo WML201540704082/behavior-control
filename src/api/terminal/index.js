@@ -215,19 +215,19 @@ export const getUrlCountRank = (params) => {
   })
 }
 
-// 桌面应用维护列表
-export const getDesktopAppList = (params) => {
+// 消息管理
+export const getMessageList = (params) => {
   return request({
-    url: '/api/idevelop-plugin/ipcdesktopapp/list',
+    url: '/api/idevelop-plugin/message/list',
     method: 'get',
     params: params
   })
 }
 
 // 桌面应用维护详情
-export const getDesktopAppDetail = (id) => {
+export const messageDetail = (id) => {
   return request({
-    url: '/api/idevelop-plugin/ipcdesktopapp/detail',
+    url: '/api/idevelop-plugin/message/detail',
     method: 'get',
     params: {
       id
@@ -235,26 +235,26 @@ export const getDesktopAppDetail = (id) => {
   })
 }
 
-// 桌面应用维护新增
-export const addDesktopApp = (data) => {
+// 消息新增
+export const addMessage = (data) => {
   return request({
-    url: '/api/idevelop-plugin/ipcdesktopapp/save',
+    url: '/api/idevelop-plugin/message/save',
     method: 'post',
     data: data
   })
 }
-// 桌面应用维护编辑
-export const updateDesktopApp = (data) => {
+// 消息编辑
+export const updateMessage = (data) => {
   return request({
-      url: '/api/idevelop-plugin/ipcdesktopapp/update',
+      url: '/api/idevelop-plugin/ipcdesktmessageopapp/update',
       method: 'post',
       data: data
   })
 }
-// 桌面应用维护删除
-export const desktopAppRemove = (id) => {
+// 消息删除
+export const messageRemove = (id) => {
   return request({
-    url: '/api/idevelop-plugin/ipcdesktopapp/remove',
+    url: '/api/idevelop-plugin/message/remove',
     method: 'post',
     data: {
       id,

@@ -12,7 +12,6 @@ import systemAdd from "@/views/monitoring/networkAccess/systemMaintenance/system
 import desktopAppAdd from "@/views/monitoring/appAccess/desktopMaintenance/desktopAppAdd.vue"
 
 
-
 import devRecordAdd from "@/views/device/components/devRecord/devRecordAdd.vue"
 import devApplyAdd from "@/views/device/components/devApply/devApplyAdd"
 import devScrappedAdd from "@/views/operation/components/devScrapped/devScrappedAdd"
@@ -72,9 +71,6 @@ export default {
     userAdd,
     systemAdd,
     desktopAppAdd,
-
-
-
 
     dataListAdd,
     dataApplyAdd,
