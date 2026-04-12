@@ -30,7 +30,7 @@
     </div>
     <div class="page_body">
       <el-row>
-        <formTitle :titleText="'查询应用访问记录列表'" :titleType="'page_title'">
+        <formTitle :titleText="'消息管理'" :titleType="'page_title'">
           <div slot="rightBtnBox">
             <el-button type="primary" :loading="loading" size="small" icon="el-icon-search" @click="onLoad">查询</el-button>
             <el-button class="border-btn" size="small" icon="el-icon-refresh" @click="searchReset">重置</el-button>
