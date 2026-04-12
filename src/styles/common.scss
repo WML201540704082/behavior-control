@@ -1,0 +1,142 @@
+// 全局变量
+@import './variables.scss';
+// ele样式覆盖
+@import './element-ui.scss';
+// 顶部右侧显示
+@import './top.scss';
+// 导航标签
+@import './tags.scss';
+// 工具类函数
+@import './mixin.scss';
+// 侧面导航栏
+@import './sidebar.scss';
+// 动画
+@import './animate/vue-transition.scss';
+//主题
+@import './theme/index.scss';
+//适配
+@import './media.scss';
+//通用配置
+@import './normalize.scss';
+// 表格表单样式
+@import './table-form-ui.scss';
+
+a{
+  text-decoration: none;
+  color:#333;
+}
+*{
+  outline: none;
+}
+
+.text_primary{
+  color: $primary-color!important;
+}
+.text_action{
+  color: $action-color;
+}
+.text_action:hover{
+  color: $primary-color;
+}
+.text-default{
+  color: $default-color;
+}
+.text-grey{
+  color: $grey-color;
+}
+.text-tips{
+  color: #a1a1a1;
+}
+
+.text-success{
+  color: $success-color;
+}
+.xt-font{
+  color: $xt-font-color;
+}
+
+.form-tips{
+  font-size: 12px;
+  line-height: 16px;
+  height: 16px;
+}
+
+.marginBto20{
+  margin-bottom: 20px;
+}
+
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li{
+  padding: 0;
+  margin: 0;
+}
+
+.overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  white-space: nowrap;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+
+.title_line{
+
+  position: relative;
+  padding-left: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  height: 20px;
+  &::before{
+    content: '';
+    position: absolute;
+    left: 0px;
+    width: 0px;
+    height: 100%;
+    border-left: 4px solid;
+    z-index: 9;
+    margin-right: 4px;
+    color: #409EFF;
+  }
+
+
+}
+.btnLine{
+  text-align: right;
+  margin: 5px 0;
+}
+.el-cascader-menu__wrap{
+  margin-bottom: 0 !important;
+}
+.el-table__fixed-right-patch{
+  background: #BFE1FF !important;
+}

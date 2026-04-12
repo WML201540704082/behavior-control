@@ -1,0 +1,70 @@
+{
+  "name": "idevelop-ui",
+  "version": "3.7.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve --no-eslint",
+    "build:prod": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "analyz": "npm_config_report=true npm run build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e"
+  },
+  "dependencies": {
+    "@antv/g6": "^4.8.21",
+    "af-table-column": "^1.0.3",
+    "ali-oss": "^6.22.0",
+    "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "classlist-polyfill": "^1.2.0",
+    "codemirror": "^5.65.15",
+    "crypto-js": "^4.0.0",
+    "echarts": "^4.9.0",
+    "element-ui": "^2.15.6",
+    "exceljs": "^4.4.0",
+    "file-saver": "2.0.5",
+    "gm-crypto": "^0.1.12",
+    "js-base64": "^2.5.1",
+    "js-cookie": "^2.2.0",
+    "js-md5": "^0.7.3",
+    "mockjs": "^1.0.1-beta3",
+    "moment": "^2.30.1",
+    "node-gyp": "^5.0.6",
+    "node-libs-browser": "^2.2.1",
+    "nprogress": "^0.2.0",
+    "print-js": "^1.6.0",
+    "qrcodejs2": "^0.0.2",
+    "script-loader": "^0.7.2",
+    "uuid": "^9.0.1",
+    "vue": "^2.6.10",
+    "vue-axios": "^2.1.2",
+    "vue-codemirror": "^4.0.6",
+    "vue-i18n": "^8.7.0",
+    "vue-json-viewer": "^2.2.22",
+    "vue-router": "^3.0.1",
+    "vuedraggable": "^2.24.3",
+    "vuex": "^3.1.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-plugin-eslint": "^3.1.5",
+    "@vue/cli-service": "^3.1.4",
+    "chai": "^4.1.2",
+    "compression-webpack-plugin": "^5.0.2",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10.0.5",
+    "sm-crypto": "^0.3.7",
+    "vue-template-compiler": "^2.5.17",
+    "webpack-bundle-analyzer": "^3.0.3"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  }
+}

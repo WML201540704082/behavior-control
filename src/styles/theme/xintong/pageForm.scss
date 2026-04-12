@@ -1,0 +1,198 @@
+.border-btn{
+  color: #4c98f7;
+  border-color: #4c98f7;
+}
+.xt_search_form{
+  .el-col{
+    // margin-bottom: 10px;
+  }
+}
+.xt_form{
+  .el-col{
+    margin-bottom: 16px;
+  }
+}
+.xt_form,
+.xt_search_form{
+  // col布局统一高度
+  .el-col-1,.el-col-2,.el-col-3,.el-col-4,.el-col-5,.el-col-6,.el-col-7,.el-col-8,.el-col-9,.el-col-10,.el-col-11,.el-col-12,
+  .el-col-13,.el-col-14,.el-col-15,.el-col-16,.el-col-17,.el-col-18,.el-col-19,.el-col-20,.el-col-21,.el-col-22,.el-col-23,.el-col-24{
+      height: 40px;
+      // min-height: 40px
+  }
+  .el-form-item{
+    margin-bottom: 0px;
+  }
+  .el-form-item__label{
+    color: #46506d
+  }
+  .el-form-item__error{
+    padding-top: 0px;
+  }
+
+  .el-textarea__inner{
+    background-color: #e0f3ff;
+    border-color: #c7dcf7;
+    color: #333;
+  }
+
+  .el-textarea.is-disabled .el-input__inner{
+    background-color: #e4edf5!important;
+  }
+  .el-textarea.is-disabled .el-textarea__inner{
+    background-color: #e4edf5!important;
+  }
+
+  .el-range-editor.is-disabled{
+    background-color: #e4edf5!important;
+  }
+  .el-range-editor.is-disabled input{
+    color: #333!important;
+  }
+
+
+  .el-input__inner{
+    background-color: #e0f3ff;
+    border-color: #c7dcf7;
+    color: #333;
+    height: 32px;
+    line-height: 32px;
+    font-size: 13px;
+  }
+  .el-input.is-disabled .el-input__inner{
+    background-color: #e4edf5!important;
+  }
+  .el-input__inner::placeholder,
+  .el-range__icon,
+  .el-date-editor .el-range-input::placeholder{
+    color: #9fabc4;
+  }
+  .el-date-editor .el-range-input{
+    background: none;
+  }
+  .el-date-editor.el-input{
+    width: 100%
+  }
+}
+
+// 表格
+.el-table .el-table__cell{
+  height: 40px;
+  padding: 3px 0;
+}
+
+.el-table th.el-table__cell>.cell{
+  color: #46506d;
+  font-size: 14px;
+}
+.el-table th.el-table__cell{
+  background-color: #bfe1ff;
+}
+.el-table thead.is-group th.el-table__cell {
+  background: #bfe1ff;
+}
+// 表格斑马线
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell{
+  background-color: #e2f2ff;
+}
+.el-table__body-wrapper::-webkit-scrollbar{
+  height: 8px;
+  width: 8px;
+  background-color: #e3eefd;
+}
+.el-table__body-wrapper::-webkit-scrollbar-thumb{
+  background-color: #C0C4CC;
+  border-radius: 100px;
+}
+// .el-table__body-wrapper table{
+//   width: 100% !important;
+// }
+
+// 解决表格固定列问题
+.el-table__fixed,
+.el-table__fixed-right{
+  height: calc(100% - 8px) !important;
+  box-shadow: -5px -2px 10px rgba(0,0,0,.12) !important;
+}
+.el-table__fixed{
+  height: calc(100% - 10px) !important;
+}
+// .el-table__fixed,
+.el-table__fixed-right .el-table__fixed-body-wrapper{
+  height: calc(100% - 36px) !important;
+}
+// 当表格没有滚动条时
+.el-table__body-wrapper.is-scrolling-none .el-table__fixed-right{
+  height: 100% !important;
+  bottom: 0 !important;
+  box-shadow: none !important;
+}
+// 当表格有纵向滚动条时
+.el-table--scrollable-y .el-table__fixed-right{
+  right: 8px !important;
+}
+// 当表格只有横向滚动条，没有纵向滚动条时
+.el-table--scrollable-x:not(.el-table--scrollable-y) .el-table__fixed-right{
+  right: 0 !important;
+}
+
+// 弹出框
+.el-popover{
+  min-width: inherit;
+}
+
+
+// .tableContent{
+//   padding: 20px !important;
+//   background: #fff;
+//   margin-top: 20px;
+// }
+// body .el-table th.gutter{
+//   display: table-cell!important;
+// }
+// body .el-table colgroup.gutter{
+//   display: table-cell!important;
+// }
+
+// .el-table__body-wrapper::-webkit-scrollbar-track{
+//   border-radius: 5px;
+// }
+
+
+
+
+
+
+.el-table__fixed-right{
+  // right: 7px;
+}
+
+// 按钮
+.el-button{
+  height: 32px;
+  padding: 9px 15px;
+  font-size: 12px;
+}
+.el-button--text{
+  padding: 0;
+}
+.el-button--small.is-circle{
+  padding: 9px;
+}
+
+// 提交按钮
+.form-btn{
+  text-align: center;
+  padding-top: 15px;
+}
+
+// 通用页面基础布局
+.xt_page_box{
+  padding: 0 16px;
+}
+.xt_card{
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+}
+
