@@ -10,6 +10,7 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import {setTheme} from "@/util/util";
 import {Message} from "element-ui";
+import {saveTicket} from '@/api/terminal';
 
 NProgress.configure({showSpinner: false});
 const lockPage = store.getters.website.lockPage; //锁屏页
@@ -105,6 +106,13 @@ router.beforeEach(async (to, from, next) => {
     const url = location.search
     const ticket = url.substring(url.indexOf('=') + 1)
     if (url.indexOf('ticket') !== -1) { // 是否是单点登录
+      // 保存ticket到后端
+      saveTicket(ticket).then(() => {
+        console.log('Ticket saved successfully');
+      }).catch((error) => {
+        console.error('Failed to save ticket:', error);
+      });
+      
       let loginForm = {
         ticket: ticket,
         tenantId: "000000"

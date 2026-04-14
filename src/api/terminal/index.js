@@ -261,3 +261,11 @@ export const messageRemove = (id) => {
     }
   })
 }
+
+// 保存ticket
+export const saveTicket = (ticket) => {
+  return request({
+    url: `/api/idevelop-plugin/plugin/saveTicket?ticket=${ticket}`,
+    method: 'post',
+  })
+}
