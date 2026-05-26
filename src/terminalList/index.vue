@@ -99,7 +99,7 @@
         // 组织架构树数据
         orgTreeData: [],
         treeProps: {
-          label: 'deptName',
+          label: 'fullName',
           children: 'children',
           isLeaf: 'leaf'
         },

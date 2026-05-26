@@ -39,7 +39,7 @@
                   <el-form style="display: flex;align-items: center;">
                     <el-button type="primary" size="small" icon="el-icon-search" @click="handleQuery">查询</el-button>
                     <el-button class="border-btn" size="small" icon="el-icon-refresh" @click="searchReset">重置</el-button>
-                    <el-button size="small" type="primary" @click="showAddDialog">新增</el-button>
+                    <el-button v-if="searchForm.fullName == '山东鲁软数字科技有限公司'" size="small" type="primary" @click="showAddDialog">新增</el-button>
                   </el-form>
                 </div>
               </div>
@@ -53,8 +53,8 @@
               >
                 <el-table-column type="index" label="序号" width="50" align="center"></el-table-column>
                 <el-table-column prop="ip" label="IP地址" min-width="150" align="center" show-overflow-tooltip></el-table-column>
-                <el-table-column prop="deptName" label="所属组织" min-width="150" align="center" show-overflow-tooltip></el-table-column>
-                <el-table-column label="操作" width="100" align="center" fixed="right">
+                <el-table-column prop="fullName" label="所属组织" min-width="150" align="center" show-overflow-tooltip></el-table-column>
+                <!-- <el-table-column label="操作" width="100" align="center" fixed="right">
                   <template slot-scope="scope">
                     <el-button type="text"
                                class="list_btn"
@@ -63,7 +63,7 @@
                               @click="handleEdit(scope.row,scope.index)">编辑
                     </el-button>
                   </template>
-                </el-table-column>
+                </el-table-column> -->
               </el-table>
               
               <pagination
@@ -87,7 +87,8 @@
   </template>
   
   <script>
-  import {getTerminalList,terminalRemove,getTerminalSlaveList} from "@/api/terminal";
+  import {getTerminalList,terminalRemove} from "@/api/terminal";
+  import {informationList} from "@/api/assets/itaiDevice";
   import {getDeptLzayList} from "@/api/system/dept";
   import TerminalAdd from './terminalAdd.vue';
   export default {
@@ -99,7 +100,7 @@
         // 组织架构树数据
         orgTreeData: [],
         treeProps: {
-          label: 'deptName',
+          label: 'fullName',
           children: 'children',
           isLeaf: 'leaf'
         },
@@ -108,7 +109,8 @@
           ip: undefined,
           current: 1,
           size: 20,
-          deptId: ''
+          deptId: '',
+          fullName: ''
         },
         // 表格相关
         dataList: [],
@@ -175,6 +177,7 @@
       
       // 点击组织架构节点
       handleNodeClick(data) {
+        this.searchForm.fullName = data.fullName
         this.searchForm.deptId = data.id;
         this.searchForm.current = 1;
         this.onLoad();
@@ -219,13 +222,27 @@
       onLoad() {
         //加载数据
         this.loading = true;
-        getTerminalList({
-          ...this.searchForm,
-          deptId: this.searchForm.deptId == '1745022609004736513' ? '' : this.searchForm.deptId
-        }).then(res => {
-          const data = res.data;
-          this.total = data.total;
-          this.dataList = data.records;
+        // getTerminalList({
+        //   ...this.searchForm,
+        //   deptId: this.searchForm.deptId == '1745022609004736513' ? '' : this.searchForm.deptId
+        // }).then(res => {
+        //   const data = res.data;
+        //   this.total = data.total;
+        //   this.dataList = data.records;
+        //   this.loading = false;
+        // });
+        informationList(
+          {
+            deviceStatusCode:"",
+            receiveUnit: this.searchForm.fullName,
+            receiveUnitCode: this.searchForm.deptId,
+          }, this.searchForm.current, this.searchForm.size
+        ).then(res => {
+          this.total = res.data.total;
+          this.dataList = (res.data.data || []).map(item => ({
+            ip: item.IP,
+            fullName: item.receiveUnit
+          }));
           this.loading = false;
         });
       },
