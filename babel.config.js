@@ -7,5 +7,8 @@ module.exports = {
         'es6.object.assign'
       ]
     }]
+  ],
+  plugins: [
+    '@babel/plugin-proposal-optional-chaining'
   ]
 }

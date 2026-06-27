@@ -11,6 +11,28 @@ export default [{
     }
 },
 {
+    path: '/home',
+    name: '插件首页',
+    component: () =>
+        import( /* webpackChunkName: "page" */ '@/page/home/index'),
+    meta: {
+        keepAlive: false,
+        isTab: false,
+        isAuth: false
+    }
+},
+{
+    path: '/search-result',
+    name: '搜索结果页',
+    component: () =>
+        import( /* webpackChunkName: "page" */ '@/page/home/SearchResultPage'),
+    meta: {
+        keepAlive: false,
+        isTab: false,
+        isAuth: false
+    }
+},
+{
     path: '/lock',
     name: '锁屏页',
     component: () =>
