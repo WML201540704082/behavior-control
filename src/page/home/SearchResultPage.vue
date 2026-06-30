@@ -153,11 +153,12 @@ export default {
     }
   },
   mounted() {
+    document.title = "国网安全浏览器导航页"
     // 从URL获取搜索参数
     const urlParams = new URLSearchParams(window.location.search);
     const query = urlParams.get('q');
     if (query) {
-      this.searchQuery = query;
+      this.searchQuery = decodeURI(query);
       this.knowledgeSearch();
     }
   },

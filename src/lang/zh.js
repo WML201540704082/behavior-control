@@ -1,6 +1,6 @@
 export default {
-  // title: '浏览器插件后台管理系统',
-  title: '国网安全浏览器导航页',
+  title: '浏览器插件后台管理系统',
+  // title: '国网安全浏览器导航页',
   logoutTip: '退出系统, 是否继续?',
   submitText: '确定',
   cancelText: '取消',

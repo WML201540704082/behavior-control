@@ -31,7 +31,7 @@
           style="width: 760px;"
           @keyup.enter="search">
         </el-input>
-        <el-button class="search-button" @click="search">搜索</el-button>
+        <el-button class="search-button" @click="search" style="width:60px;height: 38px;">搜索</el-button>
       </div>
 
       <!-- 内容卡片区域 -->
@@ -90,7 +90,7 @@
                   <span>>></span>
                 </div>
               </el-tab-pane>
-              <!-- <el-tab-pane name="favorites">
+              <el-tab-pane name="favorites">
                 <template slot="label">
                   <span class="tab-icon"></span>
                   <span>收藏夹导航</span>
@@ -107,7 +107,7 @@
                         <i class="el-icon-delete" @click.stop="deleteFavorite(item, index)"></i>
                       </div>
                     </div>
-                    <span class="nav-name">{{ item.name }}</span>
+                    <span class="nav-name">{{ item.appName }}</span>
                   </div>
                   <div class="nav-item add-favorite">
                     <div class="nav-icon add-icon" @click="addFavorite">
@@ -116,7 +116,7 @@
                     <span class="nav-name"></span>
                   </div>
                 </div>
-              </el-tab-pane> -->
+              </el-tab-pane>
             </el-tabs>
           </div>
         </el-card>
@@ -160,7 +160,8 @@ export default {
     }
   },
   mounted() {
-    this.fetchNavItems();
+    document.title = "国网安全浏览器导航页"
+    this.fetchCompanyItems();
     this.fetchFavoritesItems();
     this.fetchMessages();
     this.updateDateTime();
@@ -218,7 +219,10 @@ export default {
       return `${lunarMonth}${lunarDay}`;
     },
     fetchNavItems(appName) {
-      console.log('Fetching nav items...');
+      this.fetchCompanyItems(appName)
+      this.fetchFavoritesItems(appName)
+    },
+    fetchCompanyItems(appName) {
       request({
         url: '/api/idevelop-plugin/plugin/companyNav',
         method: 'get',
@@ -261,11 +265,11 @@ export default {
         console.error('Failed to fetch messages:', error);
       });
     },
-    fetchFavoritesItems() {
-      console.log('Fetching favorites items...');
+    fetchFavoritesItems(appName) {
       request({
-        url: '/api/idevelop-plugin/plugin/companyNav',
+        url: '/api/idevelop-plugin/plugin/favoritesNav',
         method: 'get',
+        params: appName ? { appName } : {},
         meta: {
           isToken: false
         }
@@ -273,8 +277,9 @@ export default {
         if (data.code === 200 && data.data) {
           this.favoritesItems = data.data.map((item) => {
             return {
-              name: item.name || item.appName || '未知导航',
-              url: item.url || item.appUrl || '',
+              id: item.id,
+              appName: item.appName || '未知导航',
+              url: item.url || '',
               icon: item.icon || ''
             };
           });
@@ -342,12 +347,29 @@ export default {
     },
     handleAddFavorite(formData) {
       console.log('Submit favorite:', formData, this.currentEditData ? 'Edit' : 'Add');
-      // 实现新增或编辑收藏的逻辑
-      // 这里可以调用API保存收藏信息
-      // 保存成功后关闭弹窗并刷新收藏列表
-      this.showAddFavoriteDialog = false;
-      this.currentEditData = null;
-      this.fetchFavoritesItems();
+      request({
+        url: '/api/idevelop-plugin/plugin/favoritesNav/save',
+        method: 'post',
+        data: {
+          ...formData,
+          id: this.currentEditData ? this.currentEditData.id : null
+        },
+        meta: {
+          isToken: false
+        }
+      }).then(data => {
+        if (data.code === 200) {
+          this.$message.success(this.currentEditData ? '编辑成功' : '新增成功');
+          this.showAddFavoriteDialog = false;
+          this.currentEditData = null;
+          this.fetchFavoritesItems();
+        } else {
+          this.$message.error(data.message || (this.currentEditData ? '编辑失败' : '新增失败'));
+        }
+      }).catch(error => {
+        console.error('Failed to save favorite:', error);
+        this.$message.error(this.currentEditData ? '编辑失败' : '新增失败');
+      });
     },
     handleCancelAddFavorite() {
       // 关闭弹窗并清除编辑数据
@@ -363,8 +385,39 @@ export default {
     },
     deleteFavorite(item, index) {
       console.log('Delete favorite:', item, index);
-      // 实现删除收藏的逻辑
-      // 这里可以显示确认对话框，然后删除收藏项
+      debugger
+      if (!item.id) {
+        this.$message.error('缺少id参数');
+        return;
+      }
+      this.$confirm('确定要删除这个收藏吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        request({
+          url: '/api/idevelop-plugin/plugin/favoritesNav/remove',
+          method: 'post',
+          data: {
+            id: item.id,
+          },
+          meta: {
+            isToken: false
+          }
+        }).then(data => {
+          if (data.code === 200) {
+            this.$message.success('删除成功');
+            this.fetchFavoritesItems();
+          } else {
+            this.$message.error(data.message || '删除失败');
+          }
+        }).catch(error => {
+          console.error('Failed to delete favorite:', error);
+          this.$message.error('删除失败');
+        });
+      }).catch(() => {
+        this.$message.info('已取消删除');
+      });
     }
   }
 }

@@ -7,7 +7,7 @@
   >
     <el-form :model="form" label-width="80px">
       <el-form-item label="应用名称" required>
-        <el-input v-model="form.name" placeholder="请输入应用名称"></el-input>
+        <el-input v-model="form.appName" placeholder="请输入应用名称"></el-input>
       </el-form-item>
       <el-form-item label="URL" required>
         <el-input v-model="form.url" placeholder="请输入URL地址"></el-input>
@@ -66,7 +66,7 @@ export default {
   data() {
     return {
       form: {
-        name: '',
+        appName: '',
         icon: '',
         url: ''
       },
@@ -85,7 +85,7 @@ export default {
         if (newVal) {
           // 填充表单数据
           this.form = {
-            name: newVal.name || '',
+            appName: newVal.appName || '',
             icon: newVal.icon || '',
             url: newVal.url || ''
           };
@@ -114,7 +114,7 @@ export default {
     handleCancel() {
       // 重置表单
       this.form = {
-        name: '',
+        appName: '',
         icon: '',
         url: ''
       };
