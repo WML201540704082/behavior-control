@@ -290,7 +290,7 @@ export default {
         
       } catch (error) {
         console.error('知识搜索失败:', error);
-        this.knowledgeResults = [];
+        // this.knowledgeResults = [];
         this.resourceResults = [];
         this.resultCount = 0;
       } finally {
@@ -690,10 +690,10 @@ export default {
 .knowledge-title,
 .resource-title {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: #409EFF;
   margin: 0 0 10px 0;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .resource-title a {
@@ -706,7 +706,7 @@ export default {
 }
 
 .knowledge-title:hover {
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .knowledge-desc,

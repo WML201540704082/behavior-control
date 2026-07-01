@@ -31,7 +31,7 @@
           style="width: 760px;"
           @keyup.enter="search">
         </el-input>
-        <el-button class="search-button" @click="search" style="width:60px;height: 38px;">搜索</el-button>
+        <el-button class="search-button" @click="search" style="width:60px;height: 38px;padding-top: 12px;">搜索</el-button>
       </div>
 
       <!-- 内容卡片区域 -->
