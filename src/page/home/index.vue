@@ -79,9 +79,9 @@
                 </template>
                 <div class="nav-items">
                   <div class="nav-item" v-for="(item, index) in navItems" :key="index">
-                    <div class="nav-icon" @click="navigateToUrl(item.url)">
+                    <div class="nav-icon" :class="{ 'icon-green': !item.icon }" @click="navigateToUrl(item.url)">
                       <img v-if="item.icon" :src="item.icon" />
-                      <i v-else class="el-icon-office-building"></i>
+                      <span v-else>{{ (item.name || '未知')[0] }}</span>
                     </div>
                     <span class="nav-name">{{ item.name }}</span>
                   </div>
@@ -98,9 +98,9 @@
                 <div class="nav-items">
                   <div class="nav-item" v-for="(item, index) in favoritesItems" :key="index">
                     <div class="nav-icon-container">
-                      <div class="nav-icon" @click="navigateToUrl(item.url)">
+                      <div class="nav-icon" :class="{ 'icon-green': !item.icon }" @click="navigateToUrl(item.url)">
                         <img v-if="item.icon" :src="item.icon" :alt="item.name" />
-                        <i v-else class="el-icon-star-on"></i>
+                        <span v-else>{{ (item.appName || '未知')[0] }}</span>
                       </div>
                       <div class="nav-item-actions">
                         <i class="el-icon-edit" @click.stop="editFavorite(item, index)"></i>
@@ -880,7 +880,7 @@ img {
 }
 
 .icon-green {
-  background: linear-gradient(135deg, #67c23a, #85ce61);
+  background: linear-gradient(135deg, rgb(0, 197, 134) 0%, rgb(97, 224, 181) 100%);
 }
 
 .nav-name {
